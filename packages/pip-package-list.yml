@@ -1,0 +1,71 @@
+#__BEGIN_LICENSE__
+# Copyright (c) 2015, United States Government, as represented by the
+# Administrator of the National Aeronautics and Space Administration.
+# All rights reserved.
+#
+# The xGDS platform is licensed under the Apache License, Version 2.0
+# (the "License"); you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+# http://www.apache.org/licenses/LICENSE-2.0.
+#
+# Unless required by applicable law or agreed to in writing, software distributed
+# under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+# CONDITIONS OF ANY KIND, either express or implied. See the License for the
+# specific language governing permissions and limitations under the License.
+#__END_LICENSE__
+
+pip_package_list:
+  - django==1.9.12
+  - django-pipeline
+  - django-compressor
+  - pyScss
+  - git+https://github.com/etianen/django-reversion.git@release-1.10.0#egg=reversion-1.10.0
+  - django-sphinx
+  - httplib2
+  - jinja2
+  - pyproj
+  - iso8601
+  - pytz
+  - python-dateutil
+  - django-treebeard
+  - django-taggit
+  - git+https://github.com/alex/django-filter.git@d9f3b20973c35da3f2746b1e445249ac51b36bae#egg=django_filter-0.5.5a1-py2.6-dev
+  - gdata
+  - pyzmq
+  - pylibmc
+  - pyzmq
+  - gevent
+  - msgpack-python
+  - zerorpc
+  - ipython
+  - jupyter
+  - tornado
+  - django-tagging
+  - GitPython
+  - rdflib==2.4.2
+  - django-debug-toolbar
+  - pylint
+  - pep8==1.7.0
+  - django-bower
+  - m3u8 
+  - django-resumable
+  - pykml
+  - django-discover-runner
+  - fpdf
+  - qrcode
+  - git+https://github.com/xgds/spc.git#egg=spc
+  - pandas
+  - SQLAlchemy
+  - django-deepzoom
+  - django-datatables-view
+  - django-markwhat
+  - django-autocomplete-light
+  - couchdb
+  - python-memcached
+  - polycircles
+  - untangle
+  - requests
+  - shapely
+  - fastkml
+  - LatLon
+  - PyPDF2

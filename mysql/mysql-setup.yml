@@ -1,0 +1,86 @@
+#__BEGIN_LICENSE__
+# Copyright (c) 2015, United States Government, as represented by the
+# Administrator of the National Aeronautics and Space Administration.
+# All rights reserved.
+#
+# The xGDS platform is licensed under the Apache License, Version 2.0
+# (the "License"); you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+# http://www.apache.org/licenses/LICENSE-2.0.
+#
+# Unless required by applicable law or agreed to in writing, software distributed
+# under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+# CONDITIONS OF ANY KIND, either express or implied. See the License for the
+# specific language governing permissions and limitations under the License.
+#__END_LICENSE__
+
+#  Note: DB password will default to blank but should really be defined in a file
+#  that includes this one.
+
+    - name: Install MySQL and packages
+      apt: name={{ item }} state=installed
+      with_items:
+        - mariadb-server
+        - mariadb-client
+        - python-mysqldb
+        - libmariadb-client-lgpl-dev
+      register: new_mysql_install
+      when: mysql_host == "localhost"
+
+    - lineinfile:
+        name: /etc/mysql/mariadb.conf.d/50-server.cnf
+        regexp: '^character-set-server  ='
+        line: 'character-set-server  = utf8'
+      notify:
+        Restart MySQL
+
+    - lineinfile:
+        name: /etc/mysql/mariadb.conf.d/50-server.cnf
+        regexp: '^collation-server      ='
+        line: 'collation-server      = utf8_general_ci'
+      notify:
+        Restart MySQL
+
+    - lineinfile:
+        name: /etc/mysql/mariadb.conf.d/50-client.cnf
+        regexp: '^default-character-set ='
+        line: 'default-character-set = utf8'
+
+    - name: Create empty xGDS database
+      mysql_db:
+        name: xgds_{{ xgds_sitename }}
+        state: present
+      register: xgds_database
+
+    - debug:
+        msg: "xGDS database creation status: {{ xgds_database }}"
+        
+    - name: Clear plugin setting for MySQL root user
+      shell: "mysql -u root -e \"update mysql.user set plugin='' where host='localhost'\""
+      when: mysql_host == "localhost" and new_mysql_install.results[0].changed
+      
+    - name: Ensure Anonymous user(s) are not in the database
+      mysql_user: name='' host={{ item }} state=absent
+      with_items:
+        - localhost
+        - "{{ ansible_hostname }}"
+      when: mysql_host == "localhost" and new_mysql_install.results[0].changed
+
+    - name: Remove the test database
+      mysql_db: name=test state=absent
+      when: mysql_host == "localhost" and new_mysql_install.results[0].changed
+      
+    - name: Update MySQL root password for all root accounts
+      mysql_user:
+        name: "root"
+        host: "{{ item }}"
+        password: "{{ db_password | default('') }}"
+        state: present
+        priv: '*.*:ALL,GRANT'
+      with_items:
+        - 127.0.0.1
+        - ::1
+        - localhost
+      notify:
+        - Restart MySQL
+      when: mysql_host == "localhost" and new_mysql_install.results[0].changed

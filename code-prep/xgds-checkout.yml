@@ -1,0 +1,54 @@
+#__BEGIN_LICENSE__
+# Copyright (c) 2015, United States Government, as represented by the
+# Administrator of the National Aeronautics and Space Administration.
+# All rights reserved.
+#
+# The xGDS platform is licensed under the Apache License, Version 2.0
+# (the "License"); you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+# http://www.apache.org/licenses/LICENSE-2.0.
+#
+# Unless required by applicable law or agreed to in writing, software distributed
+# under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+# CONDITIONS OF ANY KIND, either express or implied. See the License for the
+# specific language governing permissions and limitations under the License.
+#__END_LICENSE__
+
+# If there's an existing .git path, we assume someone else checked out the code and we
+# don't mess with it...
+    - stat:
+        path: "{{ source_root }}/xgds_{{xgds_sitename}}/.git"
+      register: git_dir
+
+    - name: Generate Django secret key
+      command: python -c "import random; print ''.join([random.SystemRandom().choice('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789\!@#$%^&*(-=+)') for i in range(64)])"
+      register: secret_key
+
+    - name: xGDS Source Checkout
+      git:
+        repo: https://{{ xgds_git_prefix | default('github.com/xgds') }}/xgds_{{xgds_sitename}}.git
+        dest: "{{ source_root }}/xgds_{{xgds_sitename}}"
+      when: git_dir.stat.exists == False
+
+    - name: Put submodules on master branch
+      command: git submodule foreach git checkout master
+      args:
+        chdir: "{{ source_root }}/xgds_{{xgds_sitename}}"
+      when: git_dir.stat.exists == False
+
+    # This is a bit clunky, but in case the top-level xgds site dir
+    # has some submodules that are not on master branch, we will trust
+    # that specification.  So we do one last submodule update here.
+    - name: Put submodules on branch specified at top level
+      command: git submodule update
+      args:
+        chdir: "{{ source_root }}/xgds_{{xgds_sitename}}"
+      when: git_dir.stat.exists == False
+
+      # We only create settings.py if it's not already there, so we don't
+      # break any user customizations.
+    - name: create development friendly settings.py file
+      template:
+        src: code-prep/settings-template.j2
+        dest: "{{ source_root }}/xgds_{{xgds_sitename}}/settings.py"
+        force: no

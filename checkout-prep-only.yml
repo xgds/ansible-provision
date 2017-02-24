@@ -1,0 +1,71 @@
+#__BEGIN_LICENSE__
+# Copyright (c) 2015, United States Government, as represented by the
+# Administrator of the National Aeronautics and Space Administration.
+# All rights reserved.
+#
+# The xGDS platform is licensed under the Apache License, Version 2.0
+# (the "License"); you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+# http://www.apache.org/licenses/LICENSE-2.0.
+#
+# Unless required by applicable law or agreed to in writing, software distributed
+# under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+# CONDITIONS OF ANY KIND, either express or implied. See the License for the
+# specific language governing permissions and limitations under the License.
+#__END_LICENSE__
+
+- hosts: localhost
+
+  vars_prompt:
+    - name: "xgds_sitename"
+      prompt: "xGDS site to install"
+      default: "basalt"
+      private: no
+
+    - name: "user_source_root"
+      prompt: "Parent directory for source check-out (defaults to $HOME if blank)"
+      default: null
+      private: no
+
+    - name: "mysql_host"
+      prompt: "MySQL hostname (keep default 'localhost' to install local MySQL)"
+      default: "localhost"
+      private: no
+      
+    - name: "mysql_user"
+      prompt: "MySQL remote user ID (use default of 'root' for local install)"
+      private: no
+      default: "root"
+
+    - name: "db_password"
+      prompt: "Please enter MySQL database password"
+      private: yes
+      confirm: yes
+
+    - name: "django_superuser"
+      prompt: "Django adminstrator username"
+      private: no
+      default: "xgds"
+
+    - name: "django_superuser_password"
+      prompt: "Django administrator password"
+      default: "xgds"
+      private: yes
+      confirm: yes
+
+  vars:
+    source_root: "{{ user_source_root | default(ansible_user_dir, true) }}"
+
+  tasks:
+    - name: Create empty xGDS database
+      mysql_db:
+        name: xgds_{{ xgds_sitename }}
+        state: present
+      register: xgds_database
+
+    - include: code-prep/xgds-checkout.yml
+    - include: code-prep/xgds-config.yml
+
+  handlers:
+    - include: handlers.yml
+      become: true

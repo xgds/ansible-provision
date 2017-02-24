@@ -1,0 +1,59 @@
+#__BEGIN_LICENSE__
+# Copyright (c) 2015, United States Government, as represented by the
+# Administrator of the National Aeronautics and Space Administration.
+# All rights reserved.
+#
+# The xGDS platform is licensed under the Apache License, Version 2.0
+# (the "License"); you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+# http://www.apache.org/licenses/LICENSE-2.0.
+#
+# Unless required by applicable law or agreed to in writing, software distributed
+# under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+# CONDITIONS OF ANY KIND, either express or implied. See the License for the
+# specific language governing permissions and limitations under the License.
+#__END_LICENSE__
+
+    - django_manage:
+        command: "bootstrap --yes genSourceme genSettings"
+        app_path: "{{ source_root }}/xgds_{{xgds_sitename}}"
+
+    - django_manage:
+        command: "bower install"
+        app_path: "{{ source_root }}/xgds_{{xgds_sitename}}"
+
+    - django_manage:
+        command: "prep"
+        app_path: "{{ source_root }}/xgds_{{xgds_sitename}}"
+      notify:
+        - Restart apache2
+
+    - django_manage:
+        command: "prepmigrations"
+        app_path: "{{ source_root }}/xgds_{{xgds_sitename}}"
+      when: xgds_database.changed == True
+
+    - django_manage:
+        command: "migrate"
+        app_path: "{{ source_root }}/xgds_{{xgds_sitename}}"
+      when: xgds_database.changed == True
+
+    - django_manage:
+        command: "prepfixtures"
+        app_path: "{{ source_root }}/xgds_{{xgds_sitename}}"
+      when: xgds_database.changed == True
+
+      # Note that the below environment should match the config in settings.py
+      # If you need to change one, change the other to match.
+    - name: Install xgds superuser
+      shell: |
+        source sourceme.sh
+        python -c "import django; django.setup(); from django.contrib.auth.models import User; User.objects.create_superuser(username='{{django_superuser}}', password='{{django_superuser_password}}', email='')"
+      args:
+        chdir: "{{ source_root }}/xgds_{{xgds_sitename}}"
+      environment:
+        PYTHONPATH: "{{source_root}}:{{source_root}}/xgds_{{xgds_sitename}}/apps:$PYTHONPATH"
+        DJANGO_SETTINGS_MODULE: "xgds_{{xgds_sitename}}.settings"
+        DJANGO_SCRIPT_NAME: "/"
+      notify:
+        - Restart apache2
