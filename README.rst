@@ -16,7 +16,7 @@
 
 Generic provising for a new xGDS instance with Ansible under Ubuntu 16.04 LTS (other releases my work, but are untested).  You should be able to get xGDS running as follows:
 
-- install an out-of-box server instance with only remote ssh access and git installed.
+- install an out-of-box server instance with remote ssh access and git packages installed via apt-get (or as part of initial installation).
 
 - Check this repository out of github.
 
