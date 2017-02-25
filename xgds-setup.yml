@@ -61,6 +61,7 @@
     # old version of Ruby which we get from Brightbox
     - apt_repository:
         repo: 'ppa:brightbox/ruby-ng'
+      become: true
 
     - name: Update apt cache
       apt: update_cache=true cache_valid_time=86400
@@ -72,6 +73,7 @@
         name: "{{ ansible_user_id }}"
         groups: staff
         append: yes
+      become: true
 
     - include_vars: packages/apt-package-list.yml
     - name: Install supporting OS packages
@@ -85,6 +87,7 @@
       alternatives:
         name: ruby
         path: /usr/bin/ruby1.9.3
+      become: true
         
     - include_vars: packages/pip-package-list.yml
     - name: Make sure pip is up-to-date
