@@ -98,6 +98,14 @@
       pip: name={{item}}
       with_items:
         -  "{{ pip_package_list }}"
+      become: true
+
+    - name: Make dist-packages group writable so migrations work later on
+      file:
+        path: /usr/local/lib/python2.7/dist-packages
+        mode: u=rwX,g=rwX,o=rX
+        recurse: yes
+      become: true
 
     - include_vars: packages/gem-package-list.yml
     - name: Install Ruby gem packages
