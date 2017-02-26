@@ -89,11 +89,11 @@
         path: /usr/bin/ruby1.9.3
       become: true
         
-    - include_vars: packages/pip-package-list.yml
     - name: Make sure pip is up-to-date
       pip: name=pip state=latest
       become: true
 
+    - include_vars: packages/pip-package-list.yml
     - name: Install Python pip packages
       pip: name={{item}}
       with_items:

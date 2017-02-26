@@ -16,9 +16,14 @@
 # specific language governing permissions and limitations under the License.
 #__END_LICENSE__
 
-sudo apt-get install ansible
+# Add current user to staff group so they can write to Python package dir
+# for Django migrations.  Install latest Ansible, since distributed version 
+# has buggy pip module.  Then we should be ready to go...
+
 sudo usermod -a -G staff $USER
+sudo apt-add-repository ppa:ansible/ansible
 sudo apt-get update
 sudo apt-get upgrade
+sudo apt-get install ansible
 
 echo "Please REBOOT now (sudo /sbin/reboot).  Then run provision-xgds.sh"
