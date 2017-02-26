@@ -92,7 +92,7 @@
     - include_vars: packages/pip-package-list.yml
     - name: Make sure pip is up-to-date
       pip: name=pip state=latest
-    become: true
+      become: true
 
     - name: Install Python pip packages
       pip: name={{item}}
