@@ -137,15 +137,8 @@
       become: true
 
 #
-# Last step is to create an empty database with site name, check out
-# the source code and run the django prep scripts
+# Last step is to check out the source code and run the django prep scripts
 #
-    - name: Create empty xGDS database
-      mysql_db:
-        name: xgds_{{ xgds_sitename }}
-        state: present
-      register: xgds_database
-
     - include: code-prep/xgds-checkout.yml
 
     - include: code-prep/xgds-config.yml

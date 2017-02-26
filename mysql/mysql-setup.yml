@@ -84,3 +84,6 @@
       notify:
         - Restart MySQL
       when: mysql_host == "localhost" and new_mysql_install.results[0].changed
+
+    - name: Force MySQL restart to update user table
+      meta: flush_handlers
