@@ -22,6 +22,10 @@ Generic provising for a new xGDS instance with Ansible under Ubuntu 16.04 LTS (o
 
 - cd *ansible-provision*
 
+- run: *prep-provisioning.sh*
+
+- **reboot**: *sudo /sbin/reboot*
+
 - run: *provision-xgds.sh*
 
 Status as of 2/24/17: Has been tested only with xgds_basalt.  Provisions only a server w/o SSL and does not yet have scripts for docker provisioning.
