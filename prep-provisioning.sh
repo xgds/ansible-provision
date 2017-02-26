@@ -21,9 +21,9 @@
 # has buggy pip module.  Then we should be ready to go...
 
 sudo usermod -a -G staff $USER
-sudo apt-add-repository ppa:ansible/ansible
-sudo apt-get update
-sudo apt-get upgrade
-sudo apt-get install ansible
+sudo apt-add-repository -y ppa:ansible/ansible
+sudo apt-get -y update
+sudo apt-get -y upgrade
+sudo apt-get -y install ansible
 
 echo "Please REBOOT now (sudo /sbin/reboot).  Then run provision-xgds.sh"
