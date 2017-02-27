@@ -46,9 +46,6 @@
         regexp: '^default-character-set ='
         line: 'default-character-set = utf8'
 
-    - name: Force MySQL restart so new database will have UTF8 encoding
-      meta: flush_handlers
-
     - name: Clear plugin setting for MySQL root user
       shell: "mysql -u root -e \"update mysql.user set plugin='' where host='localhost'\""
       when: mysql_host == "localhost" and new_mysql_install.results[0].changed
