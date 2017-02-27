@@ -55,5 +55,6 @@
         PYTHONPATH: "{{source_root}}:{{source_root}}/xgds_{{xgds_sitename}}/apps:$PYTHONPATH"
         DJANGO_SETTINGS_MODULE: "xgds_{{xgds_sitename}}.settings"
         DJANGO_SCRIPT_NAME: "/"
+      when: xgds_database.changed == True
       notify:
         - Restart apache2
