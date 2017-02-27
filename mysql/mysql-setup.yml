@@ -49,15 +49,6 @@
     - name: Force MySQL restart so new database will have UTF8 encoding
       meta: flush_handlers
 
-    - name: Create empty xGDS database
-      mysql_db:
-        name: xgds_{{ xgds_sitename }}
-        state: present
-      register: xgds_database
-
-    - debug:
-        msg: "xGDS database creation status: {{ xgds_database }}"
-        
     - name: Clear plugin setting for MySQL root user
       shell: "mysql -u root -e \"update mysql.user set plugin='' where host='localhost'\""
       when: mysql_host == "localhost" and new_mysql_install.results[0].changed
@@ -90,3 +81,15 @@
 
     - name: Force MySQL restart to update user table
       meta: flush_handlers
+
+    - name: Create empty xGDS database
+      mysql_db:
+        name: xgds_{{ xgds_sitename }}
+        state: present
+        login_user: "{{ mysql_user }}"
+        login_password: "{{ db_password }}"
+      register: xgds_database
+
+    - debug:
+        msg: "xGDS database creation status: {{ xgds_database }}"
+        
