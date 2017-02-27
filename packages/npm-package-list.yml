@@ -15,6 +15,6 @@
 #__END_LICENSE__
 
 npm_package_list:
-  bower: {}
-  yuglify: {}
-  browserify: {}
+  - {name: 'bower', state: 'latest'}
+  - {name: 'yuglify', state: 'latest'}
+  - {name: 'browserify', state: 'latest'}

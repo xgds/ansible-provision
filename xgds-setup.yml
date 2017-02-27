@@ -110,11 +110,11 @@
     - include_vars: packages/npm-package-list.yml
     - name: Install node NPM packages
       npm:
-        name: "{{ item.key }}"
+        name: "{{ item.name }}"
         version: "{{ item.version | default(omit) }}"
         state: "{{ item.state | default(omit) }}"
         global: true
-      with_dict: "{{ npm_package_list }}"
+      with_items: "{{ npm_package_list }}"
       become: true
 
     - include: mysql/mysql-setup.yml
@@ -129,11 +129,11 @@
     - include_vars: packages/gem-package-list.yml
     - name: Install Ruby gem packages
       gem:
-        name: "{{ item.key }}"
+        name: "{{ item.name }}"
         version: "{{ item.version | default(omit) }}"
         state: "{{ item.state | default(omit) }}"
         user_install: no
-      with_dict: "{{ gem_package_list }}"
+      with_items: "{{ gem_package_list }}"
       become: true
 
 #
