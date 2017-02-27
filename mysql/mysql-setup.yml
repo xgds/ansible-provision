@@ -46,6 +46,9 @@
         regexp: '^default-character-set ='
         line: 'default-character-set = utf8'
 
+    - name: Force MySQL restart so new database will have UTF8 encoding
+      meta: flush_handlers
+
     - name: Create empty xGDS database
       mysql_db:
         name: xgds_{{ xgds_sitename }}
