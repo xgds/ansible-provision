@@ -107,19 +107,9 @@
         recurse: yes
       become: true
 
-    - include_vars: packages/gem-package-list.yml
-    - name: Install Ruby gem packages
-      gem: 
-        name: "{{ item.key }}"
-        version: "{{ item.version | default(omit) }}"
-        state: "{{ item.state | default(omit) }}"
-        user_install: no
-      with_dict: "{{ gem_package_list }}"
-      become: true
-
     - include_vars: packages/npm-package-list.yml
     - name: Install node NPM packages
-      npm: 
+      npm:
         name: "{{ item.key }}"
         version: "{{ item.version | default(omit) }}"
         state: "{{ item.state | default(omit) }}"
@@ -134,6 +124,16 @@
       become: true
 
     - include: couchdb/couchdb-setup.yml
+      become: true
+
+    - include_vars: packages/gem-package-list.yml
+    - name: Install Ruby gem packages
+      gem:
+        name: "{{ item.key }}"
+        version: "{{ item.version | default(omit) }}"
+        state: "{{ item.state | default(omit) }}"
+        user_install: no
+      with_dict: "{{ gem_package_list }}"
       become: true
 
 #
