@@ -16,7 +16,7 @@
 
   apt_package_list:
     - openssh-server
-    - emacs
+    - emacs-nox
     - yaml-mode
     - python2.7
     - build-essential

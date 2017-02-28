@@ -27,6 +27,9 @@
       register: new_mysql_install
       when: mysql_host == "localhost"
 
+    - stat: path=/home/xgds/.dockersetup
+      register: docker_setup
+
     - lineinfile:
         name: /etc/mysql/mariadb.conf.d/50-server.cnf
         regexp: '^character-set-server  ='
@@ -45,6 +48,10 @@
         name: /etc/mysql/mariadb.conf.d/50-client.cnf
         regexp: '^default-character-set ='
         line: 'default-character-set = utf8'
+
+    - name: Start manually if running in Docker build
+      shell: nohup /usr/bin/mysqld_safe </dev/null >/dev/null 2>&1 &
+      when: docker_setup.stat.exists == True
 
     - name: Clear plugin setting for MySQL root user
       shell: "mysql -u root -e \"update mysql.user set plugin='' where host='localhost'\""
