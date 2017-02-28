@@ -136,6 +136,14 @@
       with_items: "{{ gem_package_list }}"
       become: true
 
+
+    - stat: path=/home/xgds/.dockersetup
+      register: docker_setup
+      
+    - name: Exit here if in docker setup. Need to check out code in container.
+      meta: end_play
+      when: docker_setup.stat.exists == True
+
 #
 # Last step is to check out the source code and run the django prep scripts
 #

@@ -61,6 +61,8 @@
       mysql_db:
         name: xgds_{{ xgds_sitename }}
         state: present
+        login_user: "{{ mysql_user }}"
+        login_password: "{{ db_password }}"
       register: xgds_database
 
     - include: code-prep/xgds-checkout.yml
