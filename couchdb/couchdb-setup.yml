@@ -23,7 +23,7 @@
     register: docker_setup
 
   - name: Start manually if running in Docker build
-    shell: mkdir -p /var/run/couchdb && sudo chown couchdb /var/run/couchdb && sudo -u couchdb /usr/bin/couchdb </dev/null >/dev/null 2>&1 &
+    shell: mkdir -p /var/run/couchdb && sudo chown couchdb /var/run/couchdb && sudo -u couchdb /usr/bin/couchdb &
     register: couch_startup
     when: docker_setup.stat.exists == True
 
