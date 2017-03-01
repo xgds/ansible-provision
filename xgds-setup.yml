@@ -126,9 +126,6 @@
     - include: couchdb/couchdb-setup.yml
       become: true
 
-    - name: Get latest gem installer
-      command: gem update --system
-
     - include_vars: packages/gem-package-list.yml
     - name: Install Ruby gem packages
       gem:
