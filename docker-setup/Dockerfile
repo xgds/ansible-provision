@@ -45,8 +45,28 @@ RUN apt-get -y install ansible
 
 RUN touch /home/xgds/.dockersetup
 
+# Set up volumes for databases and source tree
+VOLUME /var/lib/mysql
+VOLUME /var/lib/couchdb
+VOLUME /home/xgds/xgds_basalt
+
+# Add service definitions for container
+RUN mkdir /etc/service/mysql
+ADD run-mysql.sh /etc/service/mysql/run
+
+RUN mkdir /etc/service/couchdb
+ADD run-couchdb.sh /etc/service/couchdb/run
+
+RUN mkdir /etc/service/apache
+ADD run-apache.sh /etc/service/apache/run
+
 # Now run Ansible to provision xGDS stuff
 RUN cd /home/xgds && git clone https://github.com/xgds/ansible-provision && cd ansible-provision && ansible-playbook xgds-setup.yml -c local --inventory-file="localhost," --extra-vars "xgds_sitename='basalt' user_source_root='/home/xgds' mysql_host='localhost' mysql_user='root' db_password='xgds' django_superuser='xgds' django_superuser_password='xgds'"
+
+RUN chown -R xgds:xgds /home/xgds/ansible-provision
+RUN chown -R xgds:xgds /home/xgds/xgds_basalt
+RUN chown -R xgds:www-data /home/xgds/xgds_basalt/data
+RUN chmod -R g+rwX /home/xgds/xgds_basalt/data
 
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
