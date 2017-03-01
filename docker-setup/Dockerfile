@@ -65,6 +65,7 @@ RUN cd /home/xgds && git clone https://github.com/xgds/ansible-provision && cd a
 
 RUN chown -R xgds:xgds /home/xgds/ansible-provision
 RUN chown -R xgds:xgds /home/xgds/xgds_basalt
+RUN mkdir /home/xgds/xgds_basalt/data
 RUN chown -R xgds:www-data /home/xgds/xgds_basalt/data
 RUN chmod -R g+rwX /home/xgds/xgds_basalt/data
 
