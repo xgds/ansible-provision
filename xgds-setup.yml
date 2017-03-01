@@ -96,6 +96,7 @@
     - include_vars: packages/pip-package-list.yml
     - name: Install Python pip packages
       pip: name={{item}}
+      extra_args: -t /usr/local/lib/python2.7/dist-packages
       with_items:
         -  "{{ pip_package_list }}"
       become: true
