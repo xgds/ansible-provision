@@ -31,10 +31,16 @@ RUN usermod -a -G staff xgds
 RUN /bin/bash -c "echo "xgds:xgds" | chpasswd"
 
 # Set up ssh.  We assume installer has an RSA public key in ~/.ssh/id_rsa.pub
+# UPDATE 3/7/17: don't copy ssh key since everyone is different.  Use
+# password for initial login - user can copy key later if desired.
 RUN rm -f /etc/service/sshd/down
-COPY id_rsa.pub /tmp/your_key.pub
+#COPY id_rsa.pub /tmp/your_key.pub
 RUN mkdir -p /home/xgds/.ssh
-RUN cat /tmp/your_key.pub >> /home/xgds/.ssh/authorized_keys && rm -f /tmp/your_key.pub
+#RUN cat /tmp/your_key.pub >> /home/xgds/.ssh/authorized_keys && rm -f /tmp/your_key.pub
+
+# Be sure container_environment scripts are readable by all so locale is setup correctly
+RUN chmod a+rX /etc/container_environment*
+RUN sed -i "s|TERM=xterm|TERM=xterm-color|g" /etc/container_environment.sh
 
 # Install latest ansible in container for xGDS setup
 RUN apt-add-repository -y ppa:ansible/ansible
@@ -60,11 +66,12 @@ ADD run-couchdb.sh /etc/service/couchdb/run
 RUN mkdir /etc/service/apache
 ADD run-apache.sh /etc/service/apache/run
 
+USER xgds
 # Now run Ansible to provision xGDS stuff
 RUN cd /home/xgds && git clone https://github.com/xgds/ansible-provision && cd ansible-provision && ansible-playbook xgds-setup.yml -c local --inventory-file="localhost," --extra-vars "xgds_sitename='basalt' user_source_root='/home/xgds' mysql_host='localhost' mysql_user='root' db_password='xgds' django_superuser='xgds' django_superuser_password='xgds'"
 
-RUN chown -R xgds:xgds /home/xgds/ansible-provision
-RUN chown -R xgds:xgds /home/xgds/xgds_basalt
+USER root
+RUN chown -R xgds:xgds /home/xgds
 RUN chown -R xgds:www-data /home/xgds/xgds_basalt/data
 RUN chmod -R g+rwX /home/xgds/xgds_basalt/data
 
