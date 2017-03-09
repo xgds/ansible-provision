@@ -32,7 +32,7 @@ from siteSettings import *
 # created this key during setup.
 SECRET_KEY = '{{ secret_key.stdout_lines[0] }}'
 
-XGDS_MAP_SERVER_MAP_API_KEY = "{{ bing_maps_api_key }}"
+XGDS_MAP_SERVER_MAP_API_KEY = "{{ bing_maps_api_key | default('') }}"
 
 # We allow connections from anywhere.  If you want to restrict more, change 
 # next line to an array of allowable hostnames or IPs.
