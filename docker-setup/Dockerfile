@@ -20,6 +20,9 @@
 # a list of version numbers.
 FROM phusion/baseimage:0.9.19
 
+# Setup variable for Bing Map key if we have one
+ARG XGDS_BING_MAP_KEY=""
+
 # Use baseimage-docker's init system.
 CMD ["/sbin/my_init"]
 
@@ -38,10 +41,6 @@ RUN rm -f /etc/service/sshd/down
 RUN mkdir -p /home/xgds/.ssh
 #RUN cat /tmp/your_key.pub >> /home/xgds/.ssh/authorized_keys && rm -f /tmp/your_key.pub
 
-# Be sure container_environment scripts are readable by all so locale is setup correctly
-RUN chmod a+rX /etc/container_environment*
-RUN sed -i "s|TERM=xterm|TERM=xterm-color|g" /etc/container_environment.sh
-
 # Install latest ansible in container for xGDS setup
 RUN apt-add-repository -y ppa:ansible/ansible
 RUN apt-get -y update
@@ -50,6 +49,9 @@ RUN apt-get -y install sudo
 RUN apt-get -y install ansible
 
 RUN touch /home/xgds/.dockersetup
+
+# Allow sudo w/o password so Ansible setup will work
+RUN sed -i "s|%sudo\tALL=(ALL:ALL) ALL|%sudo\tALL= NOPASSWD:ALL|g" /etc/sudoers
 
 # Set up volumes for databases and source tree
 #VOLUME /var/lib/mysql
@@ -66,9 +68,15 @@ ADD run-couchdb.sh /etc/service/couchdb/run
 RUN mkdir /etc/service/apache
 ADD run-apache.sh /etc/service/apache/run
 
+ENV TERM xterm-color
+ENV LANG en_US.utf8
 USER xgds
 # Now run Ansible to provision xGDS stuff
-RUN cd /home/xgds && git clone https://github.com/xgds/ansible-provision && cd ansible-provision && ansible-playbook xgds-setup.yml -c local --inventory-file="localhost," --extra-vars "xgds_sitename='basalt' user_source_root='/home/xgds' mysql_host='localhost' mysql_user='root' db_password='xgds' django_superuser='xgds' django_superuser_password='xgds'"
+RUN cd /home/xgds && git clone https://github.com/xgds/ansible-provision && cd ansible-provision && ansible-playbook xgds-setup.yml -c local --inventory-file="localhost," --extra-vars "xgds_sitename='basalt' user_source_root='/home/xgds' mysql_host='localhost' mysql_user='root' bing_maps_api_key='${XGDS_BING_MAP_KEY}' db_password='xgds' django_superuser='xgds' django_superuser_password='xgds'"
+
+# Be sure container_environment scripts are readable by all so locale is setup correctly
+RUN chmod a+rX /etc/container_environment*
+RUN sed -i "s|TERM=xterm|TERM=xterm-color|g" /etc/container_environment.sh
 
 USER root
 RUN chown -R xgds:xgds /home/xgds
