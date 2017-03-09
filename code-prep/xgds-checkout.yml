@@ -72,10 +72,10 @@
         dest: "{{ source_root }}/xgds_{{xgds_sitename}}/pyraptord"
         force: yes
 
-	- name: symlink pyraptord startup script.
-	  file:
-	  	path: "{{ source_root }}/xgds_{{xgds_sitename}}/pyraptord"
-	  	dest: /etc/init.d/pyraptord
-	  	state: link
-	  become: true
-	     
+    - name: symlink pyraptord startup script.
+      file:
+        src: "{{ source_root }}/xgds_{{xgds_sitename}}/pyraptord"
+        dest: /etc/init.d/pyraptord
+        state: link
+      become: true
+
