@@ -72,13 +72,13 @@ ENV TERM xterm-color
 ENV LANG en_US.utf8
 USER xgds
 # Now run Ansible to provision xGDS stuff
-RUN cd /home/xgds && git clone https://github.com/xgds/ansible-provision && cd ansible-provision && ansible-playbook xgds-setup.yml -c local --inventory-file="localhost," --extra-vars "xgds_sitename='basalt' user_source_root='/home/xgds' mysql_host='localhost' mysql_user='root' bing_maps_api_key='${XGDS_BING_MAP_KEY}' db_password='xgds' django_superuser='xgds' django_superuser_password='xgds'"
+RUN cd /home/xgds && git clone https://github.com/xgds/ansible-provision && cd ansible-provision && ansible-playbook -vvv xgds-setup.yml -c local --inventory-file="localhost," --extra-vars "xgds_sitename='basalt' user_source_root='/home/xgds' mysql_host='localhost' mysql_user='root' bing_maps_api_key='${XGDS_BING_MAP_KEY}' db_password='xgds' django_superuser='xgds' django_superuser_password='xgds'"
 
+USER root
 # Be sure container_environment scripts are readable by all so locale is setup correctly
 RUN chmod a+rX /etc/container_environment*
 RUN sed -i "s|TERM=xterm|TERM=xterm-color|g" /etc/container_environment.sh
 
-USER root
 RUN chown -R xgds:xgds /home/xgds
 RUN chown -R xgds:www-data /home/xgds/xgds_basalt/data
 RUN chmod -R g+rwX /home/xgds/xgds_basalt/data
