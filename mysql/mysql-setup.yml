@@ -49,15 +49,15 @@
         regexp: '^default-character-set ='
         line: 'default-character-set = utf8'
 
-    - name
+    - name: Start manually if running in Docker build
+      shell: /usr/bin/mysqld_safe </dev/null >/dev/null 2>&1 &
+      when: docker_setup.stat.exists == True
+
+    - name: Wait for MySQL startup
       wait_for:
         path: /var/run/mysqld/mysqld.sock
         delay: 5
         timeout: 60
-
-    - name: Start manually if running in Docker build
-      shell: /usr/bin/mysqld_safe </dev/null >/dev/null 2>&1 &
-      when: docker_setup.stat.exists == True
 
     - name: Clear plugin setting for MySQL root user
       shell: "mysql -u root -e \"update mysql.user set plugin='' where host='localhost'\""
