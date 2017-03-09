@@ -60,13 +60,13 @@
         dest: "{{ source_root }}/xgds_{{xgds_sitename}}/apps/{{xgds_sitename}}App/pycroraptor_dev.json"
         force: yes
         
-     - name: update pycroraptor configuration files.
+    - name: update pycroraptor configuration files.
       template:
         src: code-prep/pycroraptor.j2
         dest: "{{ source_root }}/xgds_{{xgds_sitename}}/apps/{{xgds_sitename}}App/pycroraptor.json"
         force: yes
         
-     - name: update pyraptord startup script.
+    - name: update pyraptord startup script.
       template:
         src: code-prep/pyraptord.j2
         dest: "{{ source_root }}/xgds_{{xgds_sitename}}/pyraptord"
