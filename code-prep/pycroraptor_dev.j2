@@ -1,0 +1,84 @@
+{
+    "PORTS": "{{ source_root }}/xgds_basalt/apps/basaltApp/ports.json",
+    "LOG_DIR": "{{ source_root }}/xgds_basalt/data/pyraptord",
+    "LOG_FILE":"pyraptord_${unique}.txt",
+
+    "SERVICES": {
+
+        "EV1_vlc": {
+            "command": " "
+        },
+        "EV2_vlc": {
+            "command": " "
+        },
+        "SA_vlc": {
+            "command": " "
+        },
+
+		"zmqCentral": {
+		    "command": "{{ source_root }}/xgds_basalt/apps/geocamUtil/zmqUtil/zmqCentral.py -m none -c none -f"
+        },
+	
+		"EV1TrackListener": {
+		    "command": "{{ source_root }}/xgds_basalt/apps/basaltApp/scripts/evaTrackListener.py"
+        },
+		"EV2TrackListener": {
+		    "command": "{{ source_root }}/xgds_basalt/apps/basaltApp/scripts/evaTrackListener.py"
+        },
+		"SATrackListener": {
+	            "command": "{{ source_root }}/xgds_basalt/apps/basaltApp/scripts/evaTrackListener.py"
+        },
+		"evaTrackTelemetryCleanup": {
+		    "command": "{{ source_root }}/xgds_basalt/apps/basaltApp/scripts/evaTrackTelemetryCleanup.py"
+        },
+	    "gpsController1": {
+	    	"command": "{{ source_root }}/xgds_basalt/apps/basaltApp/scripts/updateSubsystemStatus.py -n gpsController1"
+	    },
+	    "gpsController2": {
+	    	"command": "{{ source_root }}/xgds_basalt/apps/basaltApp/scripts/updateSubsystemStatus.py -n gpsController2"
+	    },
+	    "saCamera": {
+	    	"command": "{{ source_root }}/xgds_basalt/apps/basaltApp/scripts/updateSubsystemStatus.py -n saCamera"
+	    },
+	    "redCamera": {
+	    	"command": "{{ source_root }}/xgds_basalt/apps/basaltApp/scripts/updateSubsystemStatus.py -n redCamera"
+	    },
+	    "redMipCamera": {
+	    	"command": "{{ source_root }}/xgds_basalt/apps/basaltApp/scripts/updateSubsystemStatus.py -n redMipCamera"
+	    },
+	    "FTIR": {
+	    	"command": "{{ source_root }}/xgds_basalt/apps/basaltApp/scripts/updateSubsystemStatus.py -n FTIR"
+	    },
+	    "video1": {
+	    	"command": "{{ source_root }}/xgds_basalt/apps/basaltApp/scripts/updateSubsystemStatus.py -n video1"
+	    },
+	    "video2": {
+	    	"command": "{{ source_root }}/xgds_basalt/apps/basaltApp/scripts/updateSubsystemStatus.py -n video2"
+	    },
+	    "ev1Backpack": {
+	    	"command": "{{ source_root }}/xgds_basalt/apps/basaltApp/scripts/updateSubsystemStatus.py -n ev1Backpack"
+	    },
+	    "ev2Backpack": {
+	    	"command": "{{ source_root }}/xgds_basalt/apps/basaltApp/scripts/updateSubsystemStatus.py -n ev2Backpack"
+	    },
+	    "fieldLoadAvg": {
+	    	"command": "{{ source_root }}/xgds_basalt/apps/basaltApp/scripts/updateLoadAverage.py -n field"
+	    },
+	    "basecampLoadAvg": {
+	    	"command": "{{ source_root }}/xgds_basalt/apps/basaltApp/scripts/updateLoadAverage.py -n basecampLoadAverage"
+	    }, 
+	    "shoreTungstenReplicator": {
+	    	"command": "{{ source_root }}/xgds_basalt/apps/basaltApp/scripts/updateReplicatorStatus.py -n shoreTungstenReplicator"
+	    },
+	    "boatTungstenReplicator": {
+	    	"command": "{{ source_root }}/xgds_basalt/apps/basaltApp/scripts/updateReplicatorStatus.py -n boatTungstenReplicator"
+	    },
+	    "videoRecorder": {
+	    	"command": "{{ source_root }}/xgds_basalt/apps/xgds_video/updateVideoRecorderStatus.py -n 'EV1, EV2, SA'"
+	    }
+	},
+    "GROUPS": {
+        "startup": ["zmqCentral", "evaTrackTelemetryCleanup",  
+        			]
+    }
+}
