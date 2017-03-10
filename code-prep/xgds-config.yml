@@ -43,6 +43,14 @@
         app_path: "{{ source_root }}/xgds_{{xgds_sitename}}"
       when: xgds_database.changed == True
 
+    - name: Enable pyraptor service.
+      service:
+        name: pyraptord
+        enabled: yes
+        pattern: pyraptord
+        state: started
+      become: true
+
       # Note that the below environment should match the config in settings.py
       # If you need to change one, change the other to match.
     - name: Install xgds superuser
