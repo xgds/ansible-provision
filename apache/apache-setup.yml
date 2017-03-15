@@ -47,3 +47,4 @@
       creates: /etc/apache2/sites-enabled/xgds_{{xgds_sitename}}.conf
     notify:
       - Restart apache2
+    when: base_only is not defined
