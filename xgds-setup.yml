@@ -80,6 +80,14 @@
         append: yes
       become: true
 
+    # Add current user to adm group so they can view log files
+    # w/o having to sudo to root.
+    - user:
+        name: "{{ ansible_user_id }}"
+        groups: adm
+        append: yes
+      become: true
+
     - include_vars: packages/apt-package-list.yml
     - name: Install supporting OS packages
       apt: pkg={{item}} state=installed
