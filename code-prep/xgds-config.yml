@@ -13,6 +13,9 @@
 # CONDITIONS OF ANY KIND, either express or implied. See the License for the
 # specific language governing permissions and limitations under the License.
 #__END_LICENSE__
+    - stat:
+        path: "code-prep/devDbSettings.sql"
+      register: dev_db_settings
 
     - django_manage:
         command: "bootstrap --yes genSourceme genSettings"
@@ -42,6 +45,15 @@
         command: "prepfixtures"
         app_path: "{{ source_root }}/xgds_{{xgds_sitename}}"
       when: xgds_database.changed == True
+
+    - name: Import developer overrides to database
+      mysql_db:
+        name: xgds_{{ xgds_sitename }}
+        state: import
+        login_user: "{{ mysql_user }}"
+        login_password: "{{ db_password }}"
+	target: code-prep/devDbSettings.sql
+      when: dev_db_settings.exists == True
 
     - name: Enable pyraptor service.
       service:
