@@ -52,7 +52,7 @@
         state: import
         login_user: "{{ mysql_user }}"
         login_password: "{{ db_password }}"
-	target: code-prep/devDbSettings.sql
+        target: code-prep/devDbSettings.sql
       when: dev_db_settings.exists == True
 
     - name: Enable pyraptor service.
