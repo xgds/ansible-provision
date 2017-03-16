@@ -64,6 +64,7 @@
   tasks:
     - name: Be sure MySQL is running
       shell: /usr/bin/mysqld_safe </dev/null >/dev/null 2>&1 &
+      become: true
 
     - name: Wait for MySQL startup
       wait_for:
