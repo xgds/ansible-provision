@@ -62,6 +62,15 @@
     source_root: "{{ user_source_root | default(ansible_user_dir, true) }}"
 
   tasks:
+    - name: Be sure MySQL is running
+      shell: /usr/bin/mysqld_safe </dev/null >/dev/null 2>&1 &
+
+    - name: Wait for MySQL startup
+      wait_for:
+        path: /var/run/mysqld/mysqld.sock
+        delay: 5
+        timeout: 60
+
     - include: apache/apache-setup.yml
       become: true
 
