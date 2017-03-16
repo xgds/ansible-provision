@@ -68,9 +68,6 @@ ADD run-couchdb.sh /etc/service/couchdb/run
 RUN mkdir /etc/service/apache
 ADD run-apache.sh /etc/service/apache/run
 
-RUN mkdir /etc/service/pyraptord
-ADD run-pyraptord.sh /etc/service/pyraptord/run
-
 ENV TERM xterm-color
 ENV LANG en_US.utf8
 USER xgds
