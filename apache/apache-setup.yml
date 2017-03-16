@@ -33,6 +33,7 @@
       dest: /etc/apache2/sites-available/xgds_{{xgds_sitename}}.conf
     notify:
       - Restart apache2
+    when: base_only is not defined
 
   - name: Disable default site
     command: a2dissite 000-default.conf
@@ -40,6 +41,7 @@
       removes: /etc/apache2/sites-enabled/000-default.conf
     notify:
       - Restart apache2
+    when: base_only is not defined
 
   - name: Enable site xgds_{{xgds_sitename}}
     command: a2ensite xgds_{{xgds_sitename}}
