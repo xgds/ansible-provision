@@ -28,8 +28,8 @@ CMD ["/sbin/my_init"]
 
 RUN touch /home/xgds/.dockersetup
 
-#RUN mkdir /etc/service/pyraptord
-#ADD run-pyraptord.sh /etc/service/pyraptord/run
+RUN mkdir /etc/service/pyraptord
+ADD run-pyraptord.sh /etc/service/pyraptord/run
 
 USER xgds
 # Now run Ansible to provision xGDS stuff
