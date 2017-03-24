@@ -27,6 +27,16 @@
     notify:
       - Restart apache2
 
+  - name: enable mod_proxy
+    apache2_module: name=proxy state=present
+    notify:
+      - Restart apache2
+
+  - name: enable mod_proxy_http
+    apache2_module: name=proxy_http state=present
+    notify:
+      - Restart apache2
+
   - name: create apache config file
     template:
       src: apache/xgds-apache-config.j2
