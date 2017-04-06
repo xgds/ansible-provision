@@ -69,3 +69,4 @@ pip_package_list:
   - fastkml
   - LatLon
   - PyPDF2
+  - redis

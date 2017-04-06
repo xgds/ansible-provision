@@ -75,9 +75,12 @@
 	    },
 	    "videoRecorder": {
 	    	"command": "{{ source_root }}/xgds_basalt/apps/xgds_video/updateVideoRecorderStatus.py -n 'EV1, EV2, SA'"
+	    },
+	    "relayDaemon": {
+	    	"command": "{{ source_root }}/xgds_basalt/apps/xgds_core/scripts/relay/relayDaemon.py http://{{ relay_destination_host }}"
 	    }
 	},
     "GROUPS": {
-        "startup": ["zmqCentral", "evaTrackTelemetryCleanup"]
+        "startup": ["zmqCentral", "evaTrackTelemetryCleanup", "relayDaemon"]
     }
 }
