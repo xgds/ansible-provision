@@ -17,11 +17,6 @@
 - hosts: localhost
 
   vars_prompt:
-    - name: "xgds_sitename"
-      prompt: "xGDS site to install"
-      default: "basalt"
-      private: no
-
     - name: "user_source_root"
       prompt: "Parent directory for source check-out (defaults to $HOME if blank)"
       default: null
@@ -57,14 +52,10 @@
       default: "xgds"
       private: yes
       confirm: yes
-      
-    - name: "relay_destination_host"
-      prompt: "Relay destination host"
-      private: no
-      default: "localhost"
 
   vars:
     source_root: "{{ user_source_root | default(ansible_user_dir, true) }}"
+    base_only: True
 
   tasks:
     # NOTE: this is temporary until we migrate UI to Bootstrap - Gumby still needs
@@ -158,17 +149,6 @@
     - stat: path=/home/xgds/.dockersetup
       register: docker_setup
       
-#    - name: Exit here if in docker setup. Need to check out code in container.
-#      meta: end_play
-#      when: docker_setup.stat.exists == True
-
-#
-# Last step is to check out the source code and run the django prep scripts
-#
-    - include: code-prep/xgds-checkout.yml
-
-    - include: code-prep/xgds-config.yml
-
   handlers:
     - include: handlers.yml
       become: true

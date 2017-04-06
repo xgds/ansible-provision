@@ -27,12 +27,23 @@
     notify:
       - Restart apache2
 
+  - name: enable mod_proxy
+    apache2_module: name=proxy state=present
+    notify:
+      - Restart apache2
+
+  - name: enable mod_proxy_http
+    apache2_module: name=proxy_http state=present
+    notify:
+      - Restart apache2
+
   - name: create apache config file
     template:
       src: apache/xgds-apache-config.j2
       dest: /etc/apache2/sites-available/xgds_{{xgds_sitename}}.conf
     notify:
       - Restart apache2
+    when: base_only is not defined
 
   - name: Disable default site
     command: a2dissite 000-default.conf
@@ -40,6 +51,7 @@
       removes: /etc/apache2/sites-enabled/000-default.conf
     notify:
       - Restart apache2
+    when: base_only is not defined
 
   - name: Enable site xgds_{{xgds_sitename}}
     command: a2ensite xgds_{{xgds_sitename}}
@@ -47,3 +59,4 @@
       creates: /etc/apache2/sites-enabled/xgds_{{xgds_sitename}}.conf
     notify:
       - Restart apache2
+    when: base_only is not defined

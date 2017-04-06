@@ -78,4 +78,3 @@
         dest: /etc/init.d/pyraptord
         state: link
       become: true
-

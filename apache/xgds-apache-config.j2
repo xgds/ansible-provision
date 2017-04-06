@@ -38,6 +38,11 @@ Listen {{apache_http_port}}
         </Directory>
 
         Alias /data {{source_root}}/xgds_{{xgds_sitename}}/data
+	
+        ProxyPass "/node"  "http://localhost:8080"
+        ProxyPassReverse "/node"  "http://localhost:8080"
+        ProxyPass "/sextant"  "http://localhost:9090"
+        ProxyPassReverse "/sextant"  "http://localhost:9090"
 
         WSGIDaemonProcess xgds_{{xgds_sitename}} processes=2 threads=15 maximum-requests=10000 display-name=xgds_{{xgds_sitename}}
         WSGIPassAuthorization on

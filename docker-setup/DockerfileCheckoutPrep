@@ -1,0 +1,48 @@
+#__BEGIN_LICENSE__
+# Copyright (c) 2015, United States Government, as represented by the
+# Administrator of the National Aeronautics and Space Administration.
+# All rights reserved.
+#
+# The xGDS platform is licensed under the Apache License, Version 2.0
+# (the "License"); you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+# http://www.apache.org/licenses/LICENSE-2.0.
+#
+# Unless required by applicable law or agreed to in writing, software distributed
+# under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+# CONDITIONS OF ANY KIND, either express or implied. See the License for the
+# specific language governing permissions and limitations under the License.
+#__END_LICENSE__
+
+# Use phusion/baseimage as base image. To make your builds reproducible, make
+# sure you lock down to a specific version, not to `latest`!
+# See https://github.com/phusion/baseimage-docker/blob/master/Changelog.md for
+# a list of version numbers.
+FROM xgds-base
+
+# Setup variable for Bing Map key if we have one
+ARG XGDS_BING_MAP_KEY=""
+
+# Use baseimage-docker's init system.
+CMD ["/sbin/my_init"]
+
+RUN touch /home/xgds/.dockersetup
+
+RUN mkdir /etc/service/pyraptord
+ADD run-pyraptord.sh /etc/service/pyraptord/run
+
+USER xgds
+# Now run Ansible to provision xGDS stuff
+RUN cd /home/xgds/ansible-provision && ansible-playbook -vvv checkout-prep-only.yml -c local --inventory-file="localhost," --extra-vars "xgds_sitename='basalt' user_source_root='/home/xgds' mysql_host='localhost' mysql_user='root' bing_maps_api_key='${XGDS_BING_MAP_KEY}' db_password='xgds' django_superuser='xgds' django_superuser_password='xgds'"
+
+USER root
+# Be sure container_environment scripts are readable by all so locale is setup correctly
+RUN chmod a+rX /etc/container_environment*
+RUN sed -i "s|TERM=xterm|TERM=xterm-color|g" /etc/container_environment.sh
+
+RUN chown -R xgds:xgds /home/xgds
+RUN chown -R xgds:www-data /home/xgds/xgds_basalt/data
+RUN chmod -R g+rwX /home/xgds/xgds_basalt/data
+
+# Clean up APT when done.
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

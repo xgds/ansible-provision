@@ -18,6 +18,7 @@
     - openssh-server
     - emacs-nox
     - yaml-mode
+    - screen
     - python2.7
     - build-essential
     - ntp

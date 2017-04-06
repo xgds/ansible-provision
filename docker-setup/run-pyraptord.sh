@@ -16,4 +16,4 @@
 # specific language governing permissions and limitations under the License.
 #__END_LICENSE__
 
-exec /etc/init.d/pyraptord start -D FOREGROUND
+exec /etc/init.d/pyraptord --noFork start

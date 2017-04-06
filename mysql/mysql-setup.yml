@@ -44,10 +44,14 @@
       notify:
         Restart MySQL
 
+    # Since we're running dev system in a virtual environment and production
+    # system ought to be firewalled anyway, we allow network access to MySQL
     - lineinfile:
-        name: /etc/mysql/mariadb.conf.d/50-client.cnf
-        regexp: '^default-character-set ='
-        line: 'default-character-set = utf8'
+        name: /etc/mysql/mariadb.conf.d/50-server.cnf
+        regexp: '^bind-address            = 127.0.0.1'
+        line: 'bind-address            = 0.0.0.0'
+      notify:
+        Restart MySQL
 
     - name: Start manually if running in Docker build
       shell: /usr/bin/mysqld_safe </dev/null >/dev/null 2>&1 &
@@ -92,6 +96,8 @@
     - name: Force MySQL restart to update user table
       meta: flush_handlers
 
+      # Don't create database if building an image with only base packages and not deploying
+      # full site.
     - name: Create empty xGDS database
       mysql_db:
         name: xgds_{{ xgds_sitename }}
@@ -99,7 +105,7 @@
         login_user: "{{ mysql_user }}"
         login_password: "{{ db_password }}"
       register: xgds_database
+      when: base_only is not defined
 
     - debug:
-        msg: "xGDS database creation status: {{ xgds_database }}"
-        
+        msg: "xGDS database creation status: {{ xgds_database | default('<none>')}}"

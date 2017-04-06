@@ -42,6 +42,11 @@
       private: yes
       confirm: yes
 
+    - name: "bing_maps_api_key"
+      prompt: "Bing maps API key for baselayer map"
+      private: no
+      default: ""
+
     - name: "django_superuser"
       prompt: "Django adminstrator username"
       private: no
@@ -57,6 +62,22 @@
     source_root: "{{ user_source_root | default(ansible_user_dir, true) }}"
 
   tasks:
+    - name: Be sure MySQL is running
+      shell: /usr/bin/mysqld_safe </dev/null >/dev/null 2>&1 &
+      become: true
+
+    - name: Wait for MySQL startup
+      wait_for:
+        path: /var/run/mysqld/mysqld.sock
+        delay: 5
+        timeout: 60
+
+    - include: apache/apache-setup.yml
+      become: true
+
+    - include: couchdb/couchdb-setup.yml
+      become: true
+
     - name: Create empty xGDS database
       mysql_db:
         name: xgds_{{ xgds_sitename }}

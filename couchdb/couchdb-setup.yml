@@ -37,3 +37,4 @@
       url: http://127.0.0.1:5984/{{ xgds_sitename | default('xgds')}}-file-store
       status_code: 201
       creates: "{{couch_db_dir}}/{{ xgds_sitename | default('xgds')}}-file-store.couch"
+    when: base_only is not defined
