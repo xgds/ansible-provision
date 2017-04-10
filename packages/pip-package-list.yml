@@ -70,3 +70,4 @@ pip_package_list:
   - LatLon
   - PyPDF2
   - redis
+  - scikit-image
