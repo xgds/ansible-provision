@@ -71,3 +71,4 @@ pip_package_list:
   - PyPDF2
   - redis
   - scikit-image
+  - django-adaptors
