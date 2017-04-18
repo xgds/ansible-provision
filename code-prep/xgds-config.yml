@@ -17,6 +17,39 @@
         path: "code-prep/devDbSettings.sql"
       register: dev_db_settings
 
+    - file:
+        path: "{{ source_root }}/xgds_{{xgds_sitename}}/data/relay"
+        state: directory
+        owner: irg
+        group: www-data
+        mode: "u=rwX,g=rwX,o=rX"
+      become: yes
+        
+    - file:
+        path: "{{ source_root }}/xgds_{{xgds_sitename}}/data/xgds_map_server/geoTiff/temp"
+        state: directory
+        owner: irg
+        group: www-data
+        mode: "u=rwX,g=rwX,o=rX"
+        recurse: yes
+      become: yes
+        
+    - file:
+        path: "{{ source_root }}/xgds_{{xgds_sitename}}/data/dem"
+        state: directory
+        owner: irg
+        group: www-data
+        mode: "u=rwX,g=rwX,o=rX"
+      become: yes
+        
+    - file:
+        path: "{{ source_root }}/xgds_{{xgds_sitename}}/data"
+        state: directory
+        owner: irg
+        group: www-data
+        mode: "u=rwX,g=rwX,o=rX"
+      become: yes
+        
     - django_manage:
         command: "bootstrap --yes genSourceme genSettings"
         app_path: "{{ source_root }}/xgds_{{xgds_sitename}}"
