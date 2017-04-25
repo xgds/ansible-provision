@@ -19,7 +19,7 @@ pip_package_list:
   - django-pipeline
   - django-compressor
   - pyScss
-  - git+https://github.com/etianen/django-reversion.git@release-1.10.0#egg=reversion-1.10.0
+#  - git+https://github.com/etianen/django-reversion.git@release-2.0.8#egg=reversion-2.0.8
   - django-sphinx
   - httplib2
   - jinja2
