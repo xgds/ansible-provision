@@ -17,4 +17,4 @@
 npm_package_list:
   - {name: 'bower', state: 'latest'}
   - {name: 'yuglify', state: 'latest'}
-  - {name: 'browserify', state: 'latest'}
+  #- {name: 'browserify', state: 'latest'}
