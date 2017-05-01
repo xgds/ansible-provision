@@ -20,7 +20,7 @@
     - file:
         path: "{{ source_root }}/xgds_{{xgds_sitename}}/data/relay"
         state: directory
-        owner: irg
+        owner: {{ ansible_user_id }}
         group: www-data
         mode: "u=rwX,g=rwX,o=rX"
       become: yes
@@ -28,7 +28,7 @@
     - file:
         path: "{{ source_root }}/xgds_{{xgds_sitename}}/data/xgds_map_server/geoTiff/temp"
         state: directory
-        owner: irg
+        owner: {{ ansible_user_id }}
         group: www-data
         mode: "u=rwX,g=rwX,o=rX"
         recurse: yes
@@ -37,7 +37,7 @@
     - file:
         path: "{{ source_root }}/xgds_{{xgds_sitename}}/data/dem"
         state: directory
-        owner: irg
+        owner: {{ ansible_user_id }}
         group: www-data
         mode: "u=rwX,g=rwX,o=rX"
       become: yes
@@ -45,7 +45,7 @@
     - file:
         path: "{{ source_root }}/xgds_{{xgds_sitename}}/data"
         state: directory
-        owner: irg
+        owner: {{ ansible_user_id }}
         group: www-data
         mode: "u=rwX,g=rwX,o=rX"
       become: yes
