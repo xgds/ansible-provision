@@ -14,9 +14,23 @@
 # specific language governing permissions and limitations under the License.
 #__END_LICENSE__
 
-    apache_http_port: 8181
-    apache_https_port: 443
-    apache_configure_ssl: no
-    apache_cert_file: null
-    apache_key_file: null
-    apache_cert_chain_file: null
+  - include_vars: apache/apache-defaults.yml
+  - include_vars: nginx/nginx-defaults.yml
+  
+  - name: install nginx
+    apt: name=nginx state=latest
+
+  - name: create nginx default config file
+    template:
+      src: nginx/xgds-nginx-config.j2
+      dest: /etc/nginx/sites-available/default
+    notify:
+      - Restart nginx
+
+  - name: create nginx.conf file
+    template:
+      src: nginx/nginx.conf.j2
+      dest: /etc/nginx/nginx.conf
+    notify:
+      - Restart nginx
+ 

@@ -132,6 +132,9 @@
     - include: apache/apache-setup.yml
       become: true
 
+    - include: nginx/nginx-setup.yml
+      become: true
+
     - include: couchdb/couchdb-setup.yml
       become: true
 

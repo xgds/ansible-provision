@@ -14,9 +14,4 @@
 # specific language governing permissions and limitations under the License.
 #__END_LICENSE__
 
-    apache_http_port: 8181
-    apache_https_port: 443
-    apache_configure_ssl: no
-    apache_cert_file: null
-    apache_key_file: null
-    apache_cert_chain_file: null
+    nginx_sse_port: 9191
