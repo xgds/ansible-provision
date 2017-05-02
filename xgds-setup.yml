@@ -66,16 +66,16 @@
   vars:
     source_root: "{{ user_source_root | default(ansible_user_dir, true) }}"
 
-  tasks:
-    # NOTE: this is temporary until we migrate UI to Bootstrap - Gumby still needs
-    # old version of Ruby which we get from Brightbox
-    - apt_repository:
-        repo: 'ppa:brightbox/ruby-ng'
-      become: true
+ # tasks:
+ #   # NOTE: this is temporary until we migrate UI to Bootstrap - Gumby still needs
+ #   # old version of Ruby which we get from Brightbox
+ #   - apt_repository:
+ #       repo: 'ppa:brightbox/ruby-ng'
+ #     become: true
 
-    - name: Update apt cache
-      apt: update_cache=true cache_valid_time=86400
-      become: true
+ #   - name: Update apt cache
+ #     apt: update_cache=true cache_valid_time=86400
+ #     become: true
 
     # Add current user to staff group so they can run migrations in 
     # dist-packages w/o having to sudo to root.
@@ -101,11 +101,11 @@
       become: true
 
     # Another temporary Ruby fix.  Be sure alternatives are set to use Ruby 1.9.3
-    - name: Set ruby version to 1.9.3
-      alternatives:
-        name: ruby
-        path: /usr/bin/ruby1.9.3
-      become: true
+    # - name: Set ruby version to 1.9.3
+    #   alternatives:
+    #     name: ruby
+    #     path: /usr/bin/ruby1.9.3
+    #   become: true
         
     - name: Make sure pip is up-to-date
       pip: name=pip state=latest
