@@ -15,3 +15,5 @@
 #__END_LICENSE__
 
     nginx_sse_port: 9191
+	nginx_pextant_port: 5000
+    
