@@ -52,6 +52,7 @@ pip_package_list:
   - pykml
   - django-discover-runner
   - fpdf
+  - flask
   - qrcode
   - git+https://github.com/xgds/spc.git#egg=spc
   - pandas
