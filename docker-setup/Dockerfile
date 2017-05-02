@@ -68,6 +68,12 @@ ADD run-couchdb.sh /etc/service/couchdb/run
 RUN mkdir /etc/service/apache
 ADD run-apache.sh /etc/service/apache/run
 
+RUN mkdir /etc/service/redis
+ADD run-redis.sh /etc/service/redis/run
+
+RUN mkdir /etc/service/nginx
+ADD run-nginx.sh /etc/service/nginx/run
+
 RUN mkdir /etc/service/pyraptord
 ADD run-pyraptord.sh /etc/service/pyraptord/run
 
@@ -75,7 +81,7 @@ ENV TERM xterm-color
 ENV LANG en_US.utf8
 USER xgds
 # Now run Ansible to provision xGDS stuff
-RUN cd /home/xgds && git clone https://github.com/xgds/ansible-provision && cd ansible-provision && ansible-playbook -vvv xgds-setup.yml -c local --inventory-file="localhost," --extra-vars "xgds_sitename='basalt' user_source_root='/home/xgds' mysql_host='localhost' mysql_user='root' bing_maps_api_key='${XGDS_BING_MAP_KEY}' db_password='xgds' django_superuser='xgds' django_superuser_password='xgds'"
+RUN cd /home/xgds && git clone https://github.com/xgds/ansible-provision && cd ansible-provision && ansible-playbook -vvv xgds-setup.yml -c local --inventory-file="localhost," --extra-vars "xgds_sitename='basalt' user_source_root='/home/xgds' mysql_host='localhost' mysql_user='root' bing_maps_api_key='${XGDS_BING_MAP_KEY}' db_password='xgds' django_superuser='xgds' django_superuser_password='xgds' relay_destination_host='localhost'"
 
 USER root
 # Be sure container_environment scripts are readable by all so locale is setup correctly
