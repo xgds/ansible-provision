@@ -53,6 +53,7 @@ pip_package_list:
   - django-discover-runner
   - fpdf
   - flask
+  - flask-sse
   - qrcode
   - git+https://github.com/xgds/spc.git#egg=spc
   - pandas
@@ -73,3 +74,4 @@ pip_package_list:
   - redis
   - scikit-image
   - django-adaptors
+  - gunicorn
