@@ -20,10 +20,11 @@
   - name: install nginx
     apt: name=nginx state=latest
 
-  - name: create nginx default config file
+  - name: create nginx default site config file
     template:
       src: nginx/xgds-nginx-config.j2
       dest: /etc/nginx/sites-available/default
+      backup: yes
     notify:
       - Restart nginx
 
@@ -31,6 +32,7 @@
     template:
       src: nginx/nginx.conf.j2
       dest: /etc/nginx/nginx.conf
+      backup: yes
     notify:
       - Restart nginx
  
