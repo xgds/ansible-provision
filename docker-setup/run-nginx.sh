@@ -16,4 +16,4 @@
 # specific language governing permissions and limitations under the License.
 #__END_LICENSE__
 
-exec /usr/bin/nginx -g 'daemon off;'
+exec /usr/sbin/nginx -g 'daemon off;'
