@@ -35,4 +35,3 @@
       backup: yes
     notify:
       - Restart nginx
- 
