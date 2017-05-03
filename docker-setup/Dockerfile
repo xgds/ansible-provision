@@ -71,6 +71,9 @@ ADD run-apache.sh /etc/service/apache/run
 RUN mkdir /etc/service/redis
 ADD run-redis.sh /etc/service/redis/run
 
+RUN mkdir /etc/service/memcached
+ADD run-memcached.sh /etc/service/memcached/run
+
 RUN mkdir /etc/service/nginx
 ADD run-nginx.sh /etc/service/nginx/run
 
