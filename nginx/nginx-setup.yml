@@ -16,7 +16,7 @@
 
   - include_vars: apache/apache-defaults.yml
   - include_vars: nginx/nginx-defaults.yml
-  
+
   - name: install nginx
     apt: name=nginx state=latest
 
