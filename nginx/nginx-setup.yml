@@ -17,6 +17,9 @@
   - include_vars: apache/apache-defaults.yml
   - include_vars: nginx/nginx-defaults.yml
 
+  - stat: path=/home/xgds/.dockersetup
+    register: docker_setup
+
   - name: install nginx
     apt: name=nginx state=latest
 
@@ -31,3 +34,8 @@
       src: nginx/nginx.conf.j2
       dest: /etc/nginx/nginx.conf
       backup: yes
+
+  - name: restart if not in docker
+    command: /bin/true
+    notify: Restart nginx
+    when: docker_setup.stat.exists == False
