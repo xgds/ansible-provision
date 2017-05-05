@@ -66,7 +66,7 @@
   vars:
     source_root: "{{ user_source_root | default(ansible_user_dir, true) }}"
 
- # tasks:
+  tasks:
  #   # NOTE: this is temporary until we migrate UI to Bootstrap - Gumby still needs
  #   # old version of Ruby which we get from Brightbox
  #   - apt_repository:
