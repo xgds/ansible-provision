@@ -67,3 +67,6 @@
     notify:
       - Restart apache2
     when: base_only is not defined
+
+  - name: Flush restart request so we dont fight for ports with nginx
+    meta: flush_handlers
