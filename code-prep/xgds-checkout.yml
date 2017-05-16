@@ -69,6 +69,7 @@
     - name: update pyraptord startup script.
       template:
         src: code-prep/pyraptord.j2
+        mode: "u=rwx,g=rx,o=rx"
         dest: "{{ source_root }}/xgds_{{xgds_sitename}}/pyraptord"
         force: yes
 
