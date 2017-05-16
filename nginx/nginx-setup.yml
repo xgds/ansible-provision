@@ -20,6 +20,17 @@
   - stat: path=/home/xgds/.dockersetup
     register: docker_setup
 
+  - copy:
+      src: nginx/devkeys
+      dest: /usr/local/ssl
+      owner: root
+      group: ssl-cert
+      mode: "u=rwX,g=rX,o=rX"
+
+  - file:
+      path: /usr/local/ssl/xgds.key
+      mode: "u=rw,g=r"
+
   - name: install nginx
     apt: name=nginx state=latest
 
