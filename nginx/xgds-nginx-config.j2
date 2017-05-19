@@ -130,6 +130,11 @@ location / {
   }
 }
 
+# Re-direct all port 80 traffic to SSL on port 443
+server {
+   listen 80;
+   return 301 https://$host$request_uri;
+}
 
 # Virtual Host configuration for example.com
 #
