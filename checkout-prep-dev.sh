@@ -16,4 +16,4 @@
 # specific language governing permissions and limitations under the License.
 #__END_LICENSE__
 
-ansible-playbook checkout-prep-only.yml -c local --inventory-file="localhost," --extra-vars "xgds_sitename='basalt' user_source_root='/home/xgds' mysql_host='localhost' mysql_user='root' db_password='xgds' django_superuser='xgds' django_superuser_password='xgds'"
+ansible-playbook checkout-prep-only.yml -c local --inventory-file="localhost," --extra-vars "xgds_sitename='basalt' user_source_root='/home/xgds' mysql_host='localhost' mysql_user='root' db_password='xgds' django_superuser='xgds' django_superuser_password='xgds' relay_destination_host='localhost'"
