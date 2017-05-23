@@ -66,9 +66,8 @@
 # }
 
 server {
-  # listen 80 default_server;
-  # server_name localhost;
   server_name _;
+  client_max_body_size 10M;
   
   #
   # SSL configuration
