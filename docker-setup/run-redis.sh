@@ -1,3 +1,5 @@
+#!/bin/sh
+
 #__BEGIN_LICENSE__
 # Copyright (c) 2015, United States Government, as represented by the
 # Administrator of the National Aeronautics and Space Administration.
@@ -14,8 +16,4 @@
 # specific language governing permissions and limitations under the License.
 #__END_LICENSE__
 
-gem_package_list:
-#  - {name: 'compass', version: '0.12.7', state: present}
-  - {name: 'sass', state: latest}
-  - {name: 'json', state: latest}
-#  - {name: 'modular-scale', version: '1.0.6', state: present}
+exec /usr/bin/redis-server --daemonize no

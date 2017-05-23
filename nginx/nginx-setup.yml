@@ -16,7 +16,21 @@
 
   - include_vars: apache/apache-defaults.yml
   - include_vars: nginx/nginx-defaults.yml
-  
+
+  - stat: path=/home/xgds/.dockersetup
+    register: docker_setup
+
+  - copy:
+      src: nginx/ssl
+      dest: /usr/local
+      owner: root
+      group: ssl-cert
+      mode: "u=rwX,g=rX,o=rX"
+
+  - file:
+      path: /usr/local/ssl/xgds.key
+      mode: "u=rw,g=r"
+
   - name: install nginx
     apt: name=nginx state=latest
 
@@ -25,14 +39,14 @@
       src: nginx/xgds-nginx-config.j2
       dest: /etc/nginx/sites-available/default
       backup: yes
-    notify:
-      - Restart nginx
 
   - name: create nginx.conf file
     template:
       src: nginx/nginx.conf.j2
       dest: /etc/nginx/nginx.conf
       backup: yes
-    notify:
-      - Restart nginx
- 
+
+  - name: restart if not in docker
+    command: /bin/true
+    notify: Restart nginx
+    when: docker_setup.stat.exists == False
