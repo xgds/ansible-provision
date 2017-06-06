@@ -36,9 +36,23 @@ Right now these scripts are xgds_basalt specific.
 - docker-setup/DockerfileBase just gets the base ubutntu packages, pip and node packages
 - docker-setup/DockerfileCheckoutPrep does the xgds code pull and setup
 
-Run this command in the docker-setup directory:
+Run these commands in the docker-setup directory to provision the docker instance:
 
+'''
 docker build --file=DockerfileBase --compress --squash -t xgds-base .
+docker build --file=DockerfileCheckoutPrep --compress --squash -t xgds-basalt .
+'''
+
+Run this command to save the new image:
+
+'''
+docker save -o xgds_basalt_docker.tar xgds-basalt
+bzip2 xgds_basalt_docker.tar
+'''
+
+For xgds usage, scp it to daikon here:
+/Library/Server/Web/Data/Sites/Default/downloads
+
 
 Status as of 6/6/17:  Has been tested with xgds_basalt and xgds_rp.  Provisions server with SSL / development certs and has scripts for docker provisioning.
 

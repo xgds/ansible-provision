@@ -25,3 +25,7 @@
         repo: https://{{ xgds_git_prefix | default('github.com/xgds') }}/sextantwebapp.git
         dest: "{{ source_root }}/sextantwebapp"
       when: sextantwebapp_git_dir.stat.exists == False
+
+    - name: Sextantwebapp npm install
+      npm:
+        path: "{{ source_root }}/sextantwebapp"
