@@ -28,4 +28,17 @@ Generic provising for a new xGDS instance with Ansible under Ubuntu 16.04 LTS (o
 
 - run: *provision-xgds.sh*
 
-Status as of 2/24/17: Has been tested only with xgds_basalt.  Provisions only a server w/o SSL and does not yet have scripts for docker provisioning.
+Building a docker image:
+
+Right now these scripts are xgds_basalt specific.
+
+- docker-setup/Dockerfile gets the base ubuntu packages, pip and node packages gets xgds code and setup.
+- docker-setup/DockerfileBase just gets the base ubutntu packages, pip and node packages
+- docker-setup/DockerfileCheckoutPrep does the xgds code pull and setup
+
+Run this command in the docker-setup directory:
+
+docker build --file=DockerfileBase --compress --squash -t xgds-base .
+
+Status as of 6/6/17:  Has been tested with xgds_basalt and xgds_rp.  Provisions server with SSL / development certs and has scripts for docker provisioning.
+
