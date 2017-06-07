@@ -43,9 +43,11 @@ docker build --file=DockerfileBase --compress --squash -t xgds-base .
 docker build --file=DockerfileCheckoutPrep --compress --squash -t xgds-basalt .
 '''
 
-Run this command to save the new image:
+Run this command from outside to save the new image:
 
 '''
+docker ps -a  # get the id of the container you are running
+docker commit <containerID> xgds-basalt
 docker save -o xgds_basalt_docker.tar xgds-basalt
 bzip2 xgds_basalt_docker.tar
 '''
