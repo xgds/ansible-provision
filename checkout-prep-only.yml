@@ -58,6 +58,11 @@
       private: yes
       confirm: yes
 
+    - name: "relay_destination_host"
+      prompt: "Relay destination host"
+      private: no
+      default: "localhost"
+
   vars:
     source_root: "{{ user_source_root | default(ansible_user_dir, true) }}"
 
