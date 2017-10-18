@@ -114,3 +114,10 @@
       when: xgds_database.changed == True
       notify:
         - Restart apache2
+
+    - name: symlink static rest
+      file:
+        src: "{{ source_root }}/xgds_{{xgds_sitename}}/build/static"
+        dest: "{{ source_root }}/xgds_{{xgds_sitename}}/build/static/rest"
+        state: link
+      become: true
