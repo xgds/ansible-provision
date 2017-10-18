@@ -26,31 +26,73 @@ Listen {{apache_http_port}}
         <Directory /var/www/html>
                 Options Indexes
                 AllowOverride None
-		Require all granted
+                Require all granted
         </Directory>
 
         Alias /static {{source_root}}/xgds_{{xgds_sitename}}/build/static
-        Alias /favicon.ico {{source_root}}/xgds_{{xgds_sitename}}/build/static/{{xgds_sitename}}App/favicon.ico
+        Alias /favicon.ico {{source_root}}/xgds_{{xgds_sitename}}/build/static/{{xgds_sitename}}App/icons/favicon.ico
         <Directory {{source_root}}/xgds_{{xgds_sitename}}>
                 Options Indexes FollowSymLinks
                 AllowOverride None
-		Require all granted
+		        Require all granted
         </Directory>
 
         Alias /data {{source_root}}/xgds_{{xgds_sitename}}/data
 	
-        ProxyPass "/node"  "http://localhost:8080"
-        ProxyPassReverse "/node"  "http://localhost:8080"
-        ProxyPass "/sextant"  "http://localhost:9090"
-        ProxyPassReverse "/sextant"  "http://localhost:9090"
-
         WSGIDaemonProcess xgds_{{xgds_sitename}} processes=2 threads=15 maximum-requests=10000 display-name=xgds_{{xgds_sitename}}
         WSGIPassAuthorization on
-	WSGIApplicationGroup %{GLOBAL}
+	    WSGIApplicationGroup %{GLOBAL}
+	    
         <Location />
                 WSGIProcessGroup xgds_{{xgds_sitename}}
         </Location>
+        
+        <Location ~ ".*/rest/.*" >
+          AllowOverride None
+          <RequireAll>
+             Require valid-user
+          </RequireAll>
+          AuthType Basic
+          AuthName {{xgds_sitename}}
+          AuthBasicProvider wsgi
+          WSGIAuthUserScript {{source_root}}/xgds_{{xgds_sitename}}/djangoWsgi.py
+        </Location>
+
+        <Location "/apache_logout/">
+          SetHandler form-logout-handler
+          AuthName {{xgds_sitename}}
+          AuthFormLogoutLocation "/accounts/logout/"
+          Session On
+          SessionMaxAge 1
+          SessionCookieName session path=/
+       </Location>
+
+       <Location ~ "^((?!/rest/).)*$">
+          # password protection allowing directory and file access                                              
+          SetEnvIf Request_URI "/accounts/login/$" allow
+          SetEnvIf Request_URI "/accounts/logout/$" allow
+          SetEnvIf Request_URI "/accounts/register/$" allow
+          SetEnvIf Request_URI "/accounts/reset-password.*/$" allow
+          SetEnvIf Request_URI "/static/.*" allow
+          ErrorDocument 401 /accounts/login/
+          AuthType Form
+          AuthFormProvider wsgi
+          AuthName {{xgds_sitename}}
+          WSGIAuthUserScript{{source_root}}/xgds_{{xgds_sitename}}/djangoWsgi.py
+          <RequireAny>
+            <RequireAll>
+                Require valid-user
+            </RequireAll>
+            <RequireAll>
+                Require env allow
+                Require all granted
+            </RequireAll>
+          </RequireAny>
+           Session On
+           SessionCookieName session path=/
+        </Location>
+        
         WSGIScriptAlias / {{source_root}}/xgds_{{xgds_sitename}}/djangoWsgi.py
-	FileETag None
-	EnableSendfile off 
+		FileETag None
+		EnableSendfile off 
 </VirtualHost>

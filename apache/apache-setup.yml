@@ -36,6 +36,21 @@
     apache2_module: name=proxy_http state=present
     notify:
       - Restart apache2
+      
+  - name: enable auth_form
+    apache2_module: name=auth_form state=present
+    notify:
+      - Restart apache2
+  
+  - name: enable request
+    apache2_module: name=request state=present
+    notify:
+      - Restart apache2
+      
+  - name: enable session_cookie
+    apache2_module: name=session_cookie state=present
+    notify:
+      - Restart apache2
 
   - name: create apache config file
     template:
