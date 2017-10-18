@@ -18,7 +18,7 @@
 # sure you lock down to a specific version, not to `latest`!
 # See https://github.com/phusion/baseimage-docker/blob/master/Changelog.md for
 # a list of version numbers.
-FROM xgds-base:20170731
+FROM xgds-base:20171018
 
 # Setup variable for Bing Map key if we have one
 ARG XGDS_BING_MAP_KEY=""

@@ -78,7 +78,7 @@ Listen {{apache_http_port}}
           AuthType Form
           AuthFormProvider wsgi
           AuthName {{xgds_sitename}}
-          WSGIAuthUserScript{{source_root}}/xgds_{{xgds_sitename}}/djangoWsgi.py
+          WSGIAuthUserScript {{source_root}}/xgds_{{xgds_sitename}}/djangoWsgi.py
           <RequireAny>
             <RequireAll>
                 Require valid-user
