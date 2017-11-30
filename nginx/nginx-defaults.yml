@@ -17,3 +17,4 @@
     nginx_sse_port: 9191
     nginx_pextant_port: 5000
     nginx_wristapp_port: 3001
+    nginx_jupyter_port: 9999
