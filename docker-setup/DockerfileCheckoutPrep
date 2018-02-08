@@ -37,9 +37,12 @@ RUN touch /home/xgds/.dockersetup
 RUN mkdir /etc/service/pyraptord
 ADD run-pyraptord.sh /etc/service/pyraptord/run
 
+# Setup variable for root git repository
+ARG XGDS_GIT_PREFIX="github.com/xgds"
+
 USER xgds
 # Now run Ansible to provision xGDS stuff
-RUN cd /home/xgds/ansible-provision && ansible-playbook -vvv checkout-prep-only.yml -c local --inventory-file="localhost," --extra-vars "xgds_sitename='${XGDS_SITENAME}' user_source_root='/home/xgds' mysql_host='localhost' mysql_user='root' bing_maps_api_key='${XGDS_BING_MAP_KEY}' db_password='xgds' django_superuser='xgds' django_superuser_password='xgds' relay_destination_host='localhost'"
+RUN cd /home/xgds/ansible-provision && ansible-playbook -vvv checkout-prep-only.yml -c local --inventory-file="localhost," --extra-vars "xgds_sitename='${XGDS_SITENAME}' xgds_git_prefix='${XGDS_GIT_PREFIX}' user_source_root='/home/xgds' mysql_host='localhost' mysql_user='root' bing_maps_api_key='${XGDS_BING_MAP_KEY}' db_password='xgds' django_superuser='xgds' django_superuser_password='xgds' relay_destination_host='localhost'"
 
 USER root
 # Be sure container_environment scripts are readable by all so locale is setup correctly
