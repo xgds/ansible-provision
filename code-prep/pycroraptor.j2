@@ -1,6 +1,6 @@
 {
-    "PORTS": "{{ source_root }}/xgds_basalt/apps/basaltApp/ports.json",
-    "LOG_DIR": "{{ source_root }}/xgds_basalt/data/pyraptord",
+    "PORTS": "{{ source_root }}/xgds_{{ xgds_sitename }}/apps/{{ xgds_sitename }}App/ports.json",
+    "LOG_DIR": "{{ source_root }}/xgds_{{ xgds_sitename }}/data/pyraptord",
     "LOG_FILE":"pyraptord_${unique}.txt",
 
     "SERVICES": {
@@ -16,49 +16,49 @@
         },
 
 		"zmqCentral": {
-		    "command": "{{ source_root }}/xgds_basalt/apps/geocamUtil/zmqUtil/zmqCentral.py -m none -c none -f"
+		    "command": "{{ source_root }}/xgds_{{ xgds_sitename }}/apps/geocamUtil/zmqUtil/zmqCentral.py -m none -c none -f"
         },
 	
 		"EV1TrackListener": {
-		    "command": "{{ source_root }}/xgds_basalt/apps/basaltApp/scripts/evaTrackListener.py"
+		    "command": "{{ source_root }}/xgds_{{ xgds_sitename }}/apps/{{ xgds_sitename }}App/scripts/evaTrackListener.py"
         },
 		"EV2TrackListener": {
-		    "command": "{{ source_root }}/xgds_basalt/apps/basaltApp/scripts/evaTrackListener.py"
+		    "command": "{{ source_root }}/xgds_{{ xgds_sitename }}/apps/{{ xgds_sitename }}App/scripts/evaTrackListener.py"
         },
 		"SATrackListener": {
-	            "command": "{{ source_root }}/xgds_basalt/apps/basaltApp/scripts/evaTrackListener.py"
+	            "command": "{{ source_root }}/xgds_{{ xgds_sitename }}/apps/{{ xgds_sitename }}App/scripts/evaTrackListener.py"
         },
 		"evaTrackTelemetryCleanup": {
-		    "command": "{{ source_root }}/xgds_basalt/apps/basaltApp/scripts/evaTrackTelemetryCleanup.py"
+		    "command": "{{ source_root }}/xgds_{{ xgds_sitename }}/apps/{{ xgds_sitename }}App/scripts/evaTrackTelemetryCleanup.py"
         },
         "pingSubsystems": {
-        		"command": "{{ source_root }}/xgds_basalt/apps/xgds_status_board/scripts/pingSubsystems.py -c {{ source_root }}/xgds_basalt/apps/basaltApp/scripts/status_board/pingConfigBoat.json"
+        		"command": "{{ source_root }}/xgds_{{ xgds_sitename }}/apps/xgds_status_board/scripts/pingSubsystems.py -c {{ source_root }}/xgds_{{ xgds_sitename }}/apps/{{ xgds_sitename }}App/scripts/status_board/pingConfigBoat.json"
 	    },
 	    "updateLoadAverages": {
-        		"command": "{{ source_root }}/xgds_basalt/apps/xgds_status_board/scripts/updateLoadAverages.py -c {{ source_root }}/xgds_basalt/apps/basaltApp/scripts/status_board/loadAverageConfigBoat.json"
+        		"command": "{{ source_root }}/xgds_{{ xgds_sitename }}/apps/xgds_status_board/scripts/updateLoadAverages.py -c {{ source_root }}/xgds_{{ xgds_sitename }}/apps/{{ xgds_sitename }}App/scripts/status_board/loadAverageConfigBoat.json"
 	    },
 	    "shoreTungstenReplicator": {
-	    		"com	mand": "{{ source_root }}/xgds_basalt/apps/basaltApp/scripts/updateReplicatorStatus.py -n shoreTungstenReplicator"
+	    		"com	mand": "{{ source_root }}/xgds_{{ xgds_sitename }}/apps/{{ xgds_sitename }}App/scripts/updateReplicatorStatus.py -n shoreTungstenReplicator"
 	    },
 	    "boatTungstenReplicator": {
-	    		"command": "{{ source_root }}/xgds_basalt/apps/basaltApp/scripts/updateReplicatorStatus.py -n boatTungstenReplicator"
+	    		"command": "{{ source_root }}/xgds_{{ xgds_sitename }}/apps/{{ xgds_sitename }}App/scripts/updateReplicatorStatus.py -n boatTungstenReplicator"
 	    },
 	    "videoRecorderStatus": {
-	    		"command": "{{ source_root }}/xgds_basalt/apps/xgds_video/updateVideoRecorderStatus.py -n 'EV1, EV2, SA'"
+	    		"command": "{{ source_root }}/xgds_{{ xgds_sitename }}/apps/xgds_video/updateVideoRecorderStatus.py -n 'EV1, EV2, SA'"
 	    },
 	    "relayDaemon": {
-	    		"command": "{{ source_root }}/xgds_basalt/apps/xgds_core/scripts/relay/relayDaemon.py http://{{ relay_destination_host }}"
+	    		"command": "{{ source_root }}/xgds_{{ xgds_sitename }}/apps/xgds_core/scripts/relay/relayDaemon.py http://{{ relay_destination_host }}"
 	    },
 	    "sse": {
 	    		"command": "gunicorn sse:app --worker-class gevent --bind localhost:9191",
-	    		"cwd": "{{ source_root }}/xgds_basalt/apps/xgds_core/sse/"
+	    		"cwd": "{{ source_root }}/xgds_{{ xgds_sitename }}/apps/xgds_core/sse/"
 	    },
 	    "sseHeartbeat": {
-	    		"command": "{{ source_root }}/xgds_basalt/apps/xgds_core/sse/sse-heartbeat.py"
+	    		"command": "{{ source_root }}/xgds_{{ xgds_sitename }}/apps/xgds_core/sse/sse-heartbeat.py"
 	    },
 	   	"pextant": {
 	    		"command": "gunicorn sextant:app --bind 127.0.0.1:5000 --access-logfile -",
-	    		"cwd": "{{ source_root }}/xgds_basalt/apps/pextant/"
+	    		"cwd": "{{ source_root }}/xgds_{{ xgds_sitename }}/apps/pextant/"
 	    }
 	},
     "GROUPS": {

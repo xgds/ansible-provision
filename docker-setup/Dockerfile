@@ -20,6 +20,9 @@
 # a list of version numbers.
 FROM phusion/baseimage:0.9.22
 
+# Setup variable for site name
+ARG XGDS_SITENAME="basalt"
+
 # Setup variable for Bing Map key if we have one
 ARG XGDS_BING_MAP_KEY=""
 
@@ -56,7 +59,7 @@ RUN sed -i "s|%sudo\tALL=(ALL:ALL) ALL|%sudo\tALL= NOPASSWD:ALL|g" /etc/sudoers
 # Set up volumes for databases and source tree
 #VOLUME /var/lib/mysql
 #VOLUME /var/lib/couchdb
-#VOLUME /home/xgds/xgds_basalt
+#VOLUME /home/xgds/xgds_${XGDS_SITENAME}
 
 # Add service definitions for container
 RUN mkdir /etc/service/mysql
@@ -84,7 +87,7 @@ ENV TERM xterm-color
 ENV LANG en_US.utf8
 USER xgds
 # Now run Ansible to provision xGDS stuff
-RUN cd /home/xgds && git clone https://github.com/xgds/ansible-provision && cd ansible-provision && ansible-playbook -vvv xgds-setup.yml -c local --inventory-file="localhost," --extra-vars "xgds_sitename='basalt' user_source_root='/home/xgds' mysql_host='localhost' mysql_user='root' bing_maps_api_key='${XGDS_BING_MAP_KEY}' db_password='xgds' django_superuser='xgds' django_superuser_password='xgds' relay_destination_host='localhost'"
+RUN cd /home/xgds && git clone https://github.com/xgds/ansible-provision && cd ansible-provision && ansible-playbook -vvv xgds-setup.yml -c local --inventory-file="localhost," --extra-vars "xgds_sitename='${XGDS_SITENAME}' user_source_root='/home/xgds' mysql_host='localhost' mysql_user='root' bing_maps_api_key='${XGDS_BING_MAP_KEY}' db_password='xgds' django_superuser='xgds' django_superuser_password='xgds' relay_destination_host='localhost'"
 
 USER root
 # Be sure container_environment scripts are readable by all so locale is setup correctly
@@ -92,8 +95,8 @@ RUN chmod a+rX /etc/container_environment*
 RUN sed -i "s|TERM=xterm|TERM=xterm-color|g" /etc/container_environment.sh
 
 RUN chown -R xgds:xgds /home/xgds
-RUN chown -R xgds:www-data /home/xgds/xgds_basalt/data
-RUN chmod -R g+rwX /home/xgds/xgds_basalt/data
+RUN chown -R xgds:www-data /home/xgds/xgds_${XGDS_SITENAME}/data
+RUN chmod -R g+rwX /home/xgds/xgds_${XGDS_SITENAME}/data
 
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

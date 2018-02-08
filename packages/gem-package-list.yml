@@ -16,6 +16,7 @@
 
 gem_package_list:
 #  - {name: 'compass', version: '0.12.7', state: present}
-  - {name: 'sass', state: latest}
-  - {name: 'json', state: latest}
+  - {name: 'bundler', state: latest}
+#  - {name: 'sass', state: latest}
+#  - {name: 'json', state: latest}
 #  - {name: 'modular-scale', version: '1.0.6', state: present}
