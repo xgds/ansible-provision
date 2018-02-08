@@ -14,11 +14,14 @@
 # specific language governing permissions and limitations under the License.
 #__END_LICENSE__
 
+# Setup variable for site name
+ARG BASE_IMAGE_TAG="20171018"
+
 # Use phusion/baseimage as base image. To make your builds reproducible, make
 # sure you lock down to a specific version, not to `latest`!
 # See https://github.com/phusion/baseimage-docker/blob/master/Changelog.md for
 # a list of version numbers.
-FROM xgds-base:20171018
+FROM xgds-base:${BASE_IMAGE_TAG}
 
 # Setup variable for site name
 ARG XGDS_SITENAME="basalt"

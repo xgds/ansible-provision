@@ -30,17 +30,18 @@ Generic provising for a new xGDS instance with Ansible under Ubuntu 16.04 LTS (o
 
 Building a docker image:
 
-Right now these scripts are xgds_basalt specific.
-
 - docker-setup/Dockerfile gets the base ubuntu packages, pip and node packages gets xgds code and setup.
 - docker-setup/DockerfileBase just gets the base ubutntu packages, pip and node packages
 - docker-setup/DockerfileCheckoutPrep does the xgds code pull and setup
 
-Run these commands in the docker-setup directory to provision the docker instance:
+Run these commands in the docker-setup directory to provision the docker instance,
+replace yoursitename with the name of the site you are building (ie subsea)
+replace todaysdate with today's date, ie 20180604
+replace yourdockerimagename with the name of the docker image you are building, for example xgds-subsea
 
 '''
-docker build --file=DockerfileBase --compress --squash -t xgds-base .
-docker build --file=DockerfileCheckoutPrep --compress --squash -t xgds-basalt .
+docker build -f DockerfileBase -t xgds-base:todaysdate --squash --compress --build-arg XGDS_SITENAME=yoursitename .
+docker build -f DockerfileCheckoutPrep --compress --squash -t yourdockerimagename --build-arg XGDS_SITENAME=yoursitename --build-arg BASE_IMAGE_TAG=todaysdate.
 '''
 
 Run this command from outside to save the new image:
