@@ -41,6 +41,11 @@
     apache2_module: name=auth_form state=present
     notify:
       - Restart apache2
+
+  - name: enable headers
+    apache2_module: name=headers state=present
+    notify:
+      - Restart apache2
   
   - name: enable request
     apache2_module: name=request state=present
