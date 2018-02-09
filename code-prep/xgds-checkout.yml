@@ -40,6 +40,14 @@
         dest: "{{ source_root }}/xgds_{{xgds_sitename}}"
       when: git_dir.stat.exists == False and git_password != "UNDEFINED"
 
+    # TODO right here somehow we need to do a git submodule init, this is untested but should maybe look like this
+    # We never had this before but things were working
+    #- name: Init submodules
+    #  command: git submodule init
+    #  args:
+    #    chdir: "{{ source_root }}/xgds_{{xgds_sitename}}"
+    #  when: git_dir.stat.exists == False
+
     - name: Put submodules on master branch
       command: git submodule foreach git checkout master
       args:
@@ -68,20 +76,20 @@
       template:
         src: code-prep/pycroraptor_dev.j2
         dest: "{{ source_root }}/xgds_{{xgds_sitename}}/apps/{{xgds_sitename}}App/pycroraptor_dev.json"
-        force: yes
+        force: no
         
     - name: update pycroraptor configuration files.
       template:
         src: code-prep/pycroraptor.j2
         dest: "{{ source_root }}/xgds_{{xgds_sitename}}/apps/{{xgds_sitename}}App/pycroraptor.json"
-        force: yes
+        force: no
         
     - name: update pyraptord startup script.
       template:
         src: code-prep/pyraptord.j2
         mode: "u=rwx,g=rx,o=rx"
         dest: "{{ source_root }}/xgds_{{xgds_sitename}}/pyraptord"
-        force: yes
+        force: no
 
     - name: symlink pyraptord startup script.
       file:
