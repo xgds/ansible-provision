@@ -41,7 +41,12 @@ replace yourdockerimagename with the name of the docker image you are building, 
 
 '''
 docker build -f DockerfileBase -t xgds-base:todaysdate --squash --compress --build-arg XGDS_SITENAME=yoursitename .
-docker build -f DockerfileCheckoutPrep --compress --squash -t yourdockerimagename --build-arg XGDS_SITENAME=yoursitename --build-arg BASE_IMAGE_TAG=todaysdate.
+docker build -f DockerfileCheckoutPrep --compress --squash -t yourdockerimagename --build-arg XGDS_SITENAME=yoursitename --build-arg BASE_IMAGE_TAG=todaysdate .
+'''
+
+In case you have a different url for your git repository and different username, password and if it doesn't end with .git (GIT_SUFFIX DEFAULTS TO .git), do like this:
+'''
+docker build -f DockerfileCheckoutPrep --compress --squash -t yourdockerimagename --build-arg GIT_USER=yourgituser --build-arg GIT_PASSWORD=yourgitpassword --build-arg GIT_SUFFIX=yourgitsuffix --build-arg XGDS_SITENAME=yoursitename --build-arg BASE_IMAGE_TAG=todaysdate .
 '''
 
 Run this command from outside to save the new image:
