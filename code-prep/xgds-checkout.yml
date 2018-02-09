@@ -24,12 +24,9 @@
       command: python -c "import random; print ''.join([random.SystemRandom().choice('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789\!@#$%^&*(-=+)') for i in range(64)])"
       register: secret_key
 
-    - debug:
-      msg: "GIT USER {{ git_user }} has password {{ git_password }}"
-
-    - debug:
-      msg: "password test worked, it is not undefined"
-      when: git_password != "UNDEFINED"
+    - name: "print user / password "
+      debug:
+        msg: "GIT USER {{ git_user }} has password {{ git_password }}"
 
     - name: xGDS Source Checkout
       git:
