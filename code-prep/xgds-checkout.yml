@@ -24,11 +24,24 @@
       command: python -c "import random; print ''.join([random.SystemRandom().choice('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789\!@#$%^&*(-=+)') for i in range(64)])"
       register: secret_key
 
+    - debug:
+      msg: "GIT USER {{ git_user }} has password {{ git_password }}"
+
+    - debug:
+      msg: "password test worked, it is not undefined"
+      when: git_password != "UNDEFINED"
+
     - name: xGDS Source Checkout
       git:
         repo: https://{{ xgds_git_prefix | default('github.com/xgds') }}/xgds_{{xgds_sitename}}.git
         dest: "{{ source_root }}/xgds_{{xgds_sitename}}"
-      when: git_dir.stat.exists == False
+      when: git_dir.stat.exists == False and git_password == "UNDEFINED"
+
+    - name: xGDS Source Checkout with authentication
+      git:
+        repo: https://{{ git_user | urlencode }}:{{ git_password | urlencode }}@{{ xgds_git_prefix | default('github.com/xgds') }}/xgds_{{xgds_sitename}}.git
+        dest: "{{ source_root }}/xgds_{{xgds_sitename}}"
+      when: git_dir.stat.exists == False and git_password != "UNDEFINED"
 
     - name: Put submodules on master branch
       command: git submodule foreach git checkout master
