@@ -30,13 +30,13 @@
 
     - name: xGDS Source Checkout
       git:
-        repo: https://{{ xgds_git_prefix | default('github.com/xgds') }}/xgds_{{xgds_sitename}}.git
+        repo: https://{{ xgds_git_prefix | default('github.com/xgds') }}/xgds_{{xgds_sitename}}{{git_suffix | default('.git')}}
         dest: "{{ source_root }}/xgds_{{xgds_sitename}}"
       when: git_dir.stat.exists == False and git_password == "UNDEFINED"
 
     - name: xGDS Source Checkout with authentication
       git:
-        repo: https://{{ git_user | urlencode }}:{{ git_password | urlencode }}@{{ xgds_git_prefix | default('github.com/xgds') }}/xgds_{{xgds_sitename}}.git
+        repo: https://{{ git_user | urlencode }}:{{ git_password | urlencode }}@{{ xgds_git_prefix | default('github.com/xgds') }}/xgds_{{xgds_sitename}}{{git_suffix | default('.git')}}
         dest: "{{ source_root }}/xgds_{{xgds_sitename}}"
       when: git_dir.stat.exists == False and git_password != "UNDEFINED"
 
