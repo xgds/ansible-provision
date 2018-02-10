@@ -32,7 +32,7 @@
     - python-setuptools
     - python-pip 
     - npm
-    - nodejs-legacy
+    - nodejs
     - subversion
     - gkermit
     - couchdb
@@ -47,5 +47,11 @@
     - python-lxml
     - redis-server
     - iputils-ping
+    - libcairo2-dev
+    - libjpeg8-dev
+    - libpango1.0-dev
+    - libgif-dev
+    - build-essential
+    - g++
     # Remove ruby 1.9.3 after bootstrap upgrade
     # - ruby1.9.3
