@@ -24,21 +24,11 @@
       command: python -c "import random; print ''.join([random.SystemRandom().choice('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789\!@#$%^&*(-=+)') for i in range(64)])"
       register: secret_key
 
-    - name: "print user / password "
-      debug:
-        msg: "GIT USER {{ git_user }} has password {{ git_password }}"
-
     - name: xGDS Source Checkout
       git:
         repo: https://{{ xgds_git_prefix | default('github.com/xgds') }}/xgds_{{xgds_sitename}}{{git_suffix | default('.git')}}
         dest: "{{ source_root }}/xgds_{{xgds_sitename}}"
-      when: git_dir.stat.exists == False and git_password == "UNDEFINED"
-
-    - name: xGDS Source Checkout with authentication
-      git:
-        repo: https://{{ git_user | urlencode }}:{{ git_password | urlencode }}@{{ xgds_git_prefix | default('github.com/xgds') }}/xgds_{{xgds_sitename}}{{git_suffix | default('.git')}}
-        dest: "{{ source_root }}/xgds_{{xgds_sitename}}"
-      when: git_dir.stat.exists == False and git_password != "UNDEFINED"
+      when: git_dir.stat.exists == False
 
     # TODO right here somehow we need to do a git submodule init, this is untested but should maybe look like this
     # We never had this before but things were working
@@ -75,13 +65,13 @@
     - name: update pycroraptor_dev configuration files.
       template:
         src: code-prep/pycroraptor_dev.j2
-        dest: "{{ source_root }}/xgds_{{xgds_sitename}}/apps/{{xgds_sitename}}App/pycroraptor_dev.json"
+        dest: "{{ source_root }}/xgds_{{xgds_sitename}}/apps/xgds_{{xgds_sitename}}_app/pycroraptor_dev.json"
         force: no
         
     - name: update pycroraptor configuration files.
       template:
         src: code-prep/pycroraptor.j2
-        dest: "{{ source_root }}/xgds_{{xgds_sitename}}/apps/{{xgds_sitename}}App/pycroraptor.json"
+        dest: "{{ source_root }}/xgds_{{xgds_sitename}}/apps/xgds_{{xgds_sitename}}_app/pycroraptor.json"
         force: no
         
     - name: update pyraptord startup script.

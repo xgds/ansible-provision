@@ -30,9 +30,7 @@
     - libevent-dev
     - ruby-full
     - python-setuptools
-    - python-pip 
-    - npm
-    - nodejs
+    - python-pip
     - subversion
     - gkermit
     - couchdb
