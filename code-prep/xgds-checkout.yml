@@ -27,18 +27,19 @@
     - name: "print user / password "
       debug:
         msg: "GIT USER {{ git_user }} has password {{ git_password }}"
-
+      when: git_user is defined and git_password is defined
+        
     - name: xGDS Source Checkout
       git:
         repo: https://{{ xgds_git_prefix | default('github.com/xgds') }}/xgds_{{xgds_sitename}}{{git_suffix | default('.git')}}
         dest: "{{ source_root }}/xgds_{{xgds_sitename}}"
-      when: git_dir.stat.exists == False and git_password == "UNDEFINED"
+      when: git_dir.stat.exists == False and git_password is undefined
 
     - name: xGDS Source Checkout with authentication
       git:
         repo: https://{{ git_user | urlencode }}:{{ git_password | urlencode }}@{{ xgds_git_prefix | default('github.com/xgds') }}/xgds_{{xgds_sitename}}{{git_suffix | default('.git')}}
         dest: "{{ source_root }}/xgds_{{xgds_sitename}}"
-      when: git_dir.stat.exists == False and git_password != "UNDEFINED"
+      when: git_dir.stat.exists == False and git_password is defined
 
     # TODO right here somehow we need to do a git submodule init, this is untested but should maybe look like this
     # We never had this before but things were working
