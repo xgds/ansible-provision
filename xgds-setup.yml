@@ -19,7 +19,7 @@
   vars_prompt:
     - name: "xgds_sitename"
       prompt: "xGDS site to install"
-      default: "basalt"
+      default: "baseline"
       private: no
 
     - name: "user_source_root"
