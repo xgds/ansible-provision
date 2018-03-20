@@ -51,5 +51,6 @@
     - libgif-dev
     - build-essential
     - g++
+    - npm
     # Remove ruby 1.9.3 after bootstrap upgrade
     # - ruby1.9.3
