@@ -14,6 +14,13 @@
 # specific language governing permissions and limitations under the License.
 #__END_LICENSE__
 
+# This Dockerfile builds the base image WITHOUT any xGDS code.  It provisions it via ansible with os and python
+# packages that we know xGDS will require.  We install a superset of all packages that we think we might need for any
+# complete xGDS deployment.
+
+# To call this, cd to this directory.  tagname should be something memorable, such as xgds-base:today'sdate  (eg xgds-base:20180612)
+# docker build --build-arg XGDS_SITENAME=xgds_yoursitename --build-arg XGDS_BING_MAP_KEY=yourbingmapskey -t tagname --squash --compress -f ./DockerfileBase .
+
 # Use phusion/baseimage as base image. To make your builds reproducible, make
 # sure you lock down to a specific version, not to `latest`!
 # See https://github.com/phusion/baseimage-docker/blob/master/Changelog.md for
@@ -21,10 +28,11 @@
 FROM phusion/baseimage:0.10.0
 
 # Setup variable for site name
-ARG XGDS_SITENAME="basalt"
+ARG XGDS_SITENAME
+RUN test -n "$XGDS_SITENAME"
 
 # Setup variable for Bing Map key if we have one
-ARG XGDS_BING_MAP_KEY=""
+ARG XGDS_BING_MAP_KEY="TODO_FILL_IN_YOUR_BING_MAPS_KEY"
 
 # Use baseimage-docker's init system.
 CMD ["/sbin/my_init"]

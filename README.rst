@@ -30,6 +30,11 @@ Generic provising for a new xGDS instance with Ansible under Ubuntu 16.04 LTS (o
 
 Building a docker image:
 
+- To build a new generic docker image:
+   - cd docker-setup
+   - docker build --build-arg XGDS_SITENAME=xgds_yoursitename --build-arg XGDS_BING_MAP_KEY=yourbingmapskey -t tagname --squash --compress -f ./DockerfileBase .
+
+
 - docker-setup/Dockerfile gets the base ubuntu packages, pip and node packages gets xgds code and setup.
 - docker-setup/DockerfileBase just gets the base ubutntu packages, pip and node packages
 - docker-setup/DockerfileCheckoutPrep does the xgds code pull and setup

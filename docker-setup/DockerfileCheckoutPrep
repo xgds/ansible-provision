@@ -14,20 +14,28 @@
 # specific language governing permissions and limitations under the License.
 #__END_LICENSE__
 
-# Setup variable for site name
-ARG BASE_IMAGE_TAG="20171018"
+# This Dockerfile must be run after DockerfileBase has built the base image.  This completes the docker image by checking
+# out and configuring xGDS.
+
+# To call this, use the tagname from the base image you just built, ie xgds-base:20180612, and newtagname for your container, ie xgds-yoursitename:20180612:
+# docker build --build-arg BASE_IMAGE_TAG=tagname --build-arg XGDS_SITENAME=yoursitename --build-arg XGDS_BING_MAP_KEY=yourbingmapskey -t newtagname --squash --compress -f ./DockerfileCheckoutPrep .
+
+# Setup variable for base image tag name
+ARG BASE_IMAGE_TAG
+# RUN test -n "BASE_IMAGE_TAG"
 
 # Use phusion/baseimage as base image. To make your builds reproducible, make
 # sure you lock down to a specific version, not to `latest`!
 # See https://github.com/phusion/baseimage-docker/blob/master/Changelog.md for
 # a list of version numbers.
-FROM xgds-base:${BASE_IMAGE_TAG}
+FROM ${BASE_IMAGE_TAG}
 
 # Setup variable for site name
-ARG XGDS_SITENAME="basalt"
+ARG XGDS_SITENAME
+RUN test -n "$XGDS_SITENAME"
 
 # Setup variable for Bing Map key if we have one
-ARG XGDS_BING_MAP_KEY=""
+ARG XGDS_BING_MAP_KEY="TODO_FILL_IN_YOUR_BING_MAPS_KEY"
 
 # Use baseimage-docker's init system.
 CMD ["/sbin/my_init"]
