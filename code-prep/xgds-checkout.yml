@@ -31,7 +31,7 @@
         
     - name: xGDS Source Checkout
       git:
-        repo: https://{{ xgds_git_prefix | default('github.com/xgds') }}/{{xgds_sitename}}{{git_suffix | default('.git')}}
+        repo: https://{{ xgds_git_prefix | default('github.com/xgds') }}/xgds_{{xgds_sitename}}{{git_suffix | default('.git')}}
         dest: "{{ source_root }}/xgds_{{xgds_sitename}}"
       when: git_dir.stat.exists == False and (git_password is undefined or git_password == "UNDEFINED")
 
