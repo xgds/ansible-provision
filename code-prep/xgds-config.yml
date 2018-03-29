@@ -58,11 +58,11 @@
         command: "prepnpm"
         app_path: "{{ source_root }}/xgds_{{xgds_sitename}}"
 
-#    - django_manage:
-#        command: "prep"
-#        app_path: "{{ source_root }}/xgds_{{xgds_sitename}}"
-#      notify:
-#        - Restart apache2
+    - django_manage:
+        command: "prep"
+        app_path: "{{ source_root }}/xgds_{{xgds_sitename}}"
+      notify:
+        - Restart apache2
 
     - django_manage:
         command: "prepmigrations"
