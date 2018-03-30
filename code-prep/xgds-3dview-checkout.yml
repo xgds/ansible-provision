@@ -17,15 +17,15 @@
 # If there's an existing .git path, we assume someone else checked out the code and we
 # don't mess with it...
     - stat:
-        path: "{{ source_root }}/sextantwebapp/.git"
-      register: sextantwebapp_git_dir
+        path: "{{ source_root }}/xgds_3dview/.git"
+      register: xgds_3dview_git_dir
 
-    - name: Sextantwebapp Source Checkout
+    - name: xgds_3dview Source Checkout
       git:
-        repo: https://{{ xgds_git_prefix | default('github.com/xgds') }}/sextantwebapp.git
-        dest: "{{ source_root }}/sextantwebapp"
-      when: sextantwebapp_git_dir.stat.exists == False
+        repo: https://{{ xgds_git_prefix | default('github.com/xgds') }}/xgds_3dview.git
+        dest: "{{ source_root }}/xgds_3dview"
+      when: xgds_3dview_git_dir.stat.exists == False
 
-    - name: Sextantwebapp npm install
+    - name: xgds_3dview npm install
       npm:
-        path: "{{ source_root }}/sextantwebapp"
+        path: "{{ source_root }}/xgds_3dview"

@@ -93,7 +93,7 @@
 
     - include: code-prep/xgds-checkout.yml
     - include: code-prep/xgds-config.yml
-    - include: code-prep/sextantwebapp-checkout.yml
+    - include: code-prep/xgds-3dview-checkout.yml
 
   handlers:
     - include: handlers.yml
