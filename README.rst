@@ -14,7 +14,11 @@
 ..  specific language governing permissions and limitations under the License.
 .. __END_LICENSE__
 
-Generic provising for a new xGDS instance with Ansible under Ubuntu 16.04 LTS (other releases my work, but are untested).  You should be able to get xGDS running as follows:
+Generic provising for a new xGDS instance with Ansible under Ubuntu 16.04 LTS (other releases my work, but are untested).
+First you need a virtual machine within which to provision xGDS.  For Docker usage, see the docker-setup directory,
+specifically DockerfileBase to build a base image, and DockerfileCheckoutPrep for an xGDS configured Docker image.
+
+You should be able to get xGDS running as follows:
 
 - install an out-of-box server instance with remote ssh access and git packages installed via apt-get (or as part of initial installation).
 
