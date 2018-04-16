@@ -25,11 +25,17 @@
   - name: Extract geoserver into
     unarchive:
       src: {{geoserver_download_url}}
-      dest: /usr/local/geoserver-{{geoserver_version}}
+      dest: {{geoserver_install_path}}-{{geoserver_version}}
       remote-src: yes
 
   - name: Symlink Geoserver
     file:
-      src: /usr/local/geoserver-{{geoserver_version}}
-      dest: /usr/local/geoserver
+      src: {{geoserver_install_path}}-{{geoserver_version}}
+      dest: {{geoserver_install_path}}
       state: link
+
+  - name: Change Jetty port
+    replace:
+      path: {{geoserver_install_path}}/start.ini
+      regexp: 'jetty.port=8080'
+      replace: 'jetty.port={{geoserver_port}}'

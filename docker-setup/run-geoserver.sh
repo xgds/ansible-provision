@@ -1,3 +1,5 @@
+#!/bin/sh
+
 #__BEGIN_LICENSE__
 # Copyright (c) 2015, United States Government, as represented by the
 # Administrator of the National Aeronautics and Space Administration.
@@ -14,8 +16,6 @@
 # specific language governing permissions and limitations under the License.
 #__END_LICENSE__
 
-    nginx_sse_port: 9191
-    nginx_pextant_port: 5000
-    nginx_wristapp_port: 3001
-    nginx_jupyter_port: 9999
-    nginx_geoserver_port: 9090
+su - xgds
+export GEOSERVER_HOME=/usr/local/geoserver
+exec /usr/local/geoserver/bin/startup.sh
