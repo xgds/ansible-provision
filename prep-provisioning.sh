@@ -26,6 +26,6 @@ sudo apt-add-repository https://deb.nodesource.com/setup_8.x
 sudo apt-get -y update
 sudo apt-get -y upgrade
 sudo apt-get -y install ansible
-ansible-galaxy install ansiblebit.oracle-java
+sudo ansible-galaxy install ansiblebit.oracle-java
 
 echo "Please REBOOT now (sudo /sbin/reboot).  Then run provision-xgds.sh"
