@@ -26,7 +26,7 @@ sudo apt-add-repository https://deb.nodesource.com/setup_8.x
 sudo apt-get -y update
 sudo apt-get -y upgrade
 sudo apt-get -y install ansible
-sudo ansible-galaxy install ansiblebit.launchpad-ppa-webupd8
+sudo ansible-galaxy install --roles-path /etc/ansible/roles ansiblebit.launchpad-ppa-webupd8
 sudo ansible-galaxy install --roles-path /etc/ansible/roles ansiblebit.oracle-java
 
 echo "Please REBOOT now (sudo /sbin/reboot).  Then run provision-xgds.sh"
