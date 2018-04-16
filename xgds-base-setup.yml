@@ -16,6 +16,11 @@
 
 - hosts: localhost
 
+  roles:
+    - role: ansiblebit.oracle-java,
+      oracle_java_set_as_default: yes
+      oracle_java_version: 8
+
   vars_prompt:
     - name: "user_source_root"
       prompt: "Parent directory for source check-out (defaults to $HOME if blank)"
@@ -119,6 +124,9 @@
       become: true
 
     - include: couchdb/couchdb-setup.yml
+      become: true
+
+    - include: geoserver/geoserver-setup.yml
       become: true
 
     - include_vars: packages/gem-package-list.yml
