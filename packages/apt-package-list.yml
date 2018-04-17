@@ -26,6 +26,7 @@
     - python-dev
     - python-imaging
     - python-scipy
+    - pylint
     - git
     - libevent-dev
     - ruby-full
