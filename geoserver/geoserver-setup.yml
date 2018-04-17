@@ -25,12 +25,12 @@
   - name: Extract geoserver into
     unarchive:
       src: {{geoserver_download_url}}
-      dest: {{geoserver_install_path}}-{{geoserver_version}}
+      dest: '{{geoserver_install_path}}-{{geoserver_version}}'
       remote-src: yes
 
   - name: Symlink Geoserver
     file:
-      src: {{geoserver_install_path}}-{{geoserver_version}}
+      src: '{{geoserver_install_path}}-{{geoserver_version}}'
       dest: {{geoserver_install_path}}
       state: link
 
