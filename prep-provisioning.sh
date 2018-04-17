@@ -20,6 +20,10 @@
 # for Django migrations.  Install latest Ansible, since distributed version 
 # has buggy pip module.  Then we should be ready to go...
 
+# NOTE: This script is *not* called by Docker when building a container. It
+# is for provisioning a "traditional" VM. Any changes to the config here
+# that are needed for Docker setup must be mirrored in DockerfileBase!
+
 sudo usermod -a -G staff $USER
 sudo apt-add-repository -y ppa:ansible/ansible
 sudo apt-add-repository -y ppa:webupd8team/java
