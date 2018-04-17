@@ -16,17 +16,6 @@
 
 - hosts: localhost
 
-  tasks:
-    - name: galaxy install Java PPA
-      local_action: command ansible-galaxy install ansiblebit.launchpad-ppa-webupd8 --ignore-errors
-    - name: galaxy install Java role
-      local_action: command ansible-galaxy install ansiblebit.oracle-java --ignore-errors
-
-  roles:
-    - role: ansiblebit.oracle-java
-      oracle_java_set_as_default: yes
-      oracle_java_version: 8
-
   vars_prompt:
     - name: "user_source_root"
       prompt: "Parent directory for source check-out (defaults to $HOME if blank)"
@@ -120,6 +109,11 @@
       with_items: "{{ npm_package_list }}"
       become: true
 
+    - name: galaxy install Java PPA
+      local_action: command ansible-galaxy install ansiblebit.launchpad-ppa-webupd8 --ignore-errors
+    - name: galaxy install Java role
+      local_action: command ansible-galaxy install ansiblebit.oracle-java --ignore-errors
+
     - include: mysql/mysql-setup.yml
       become: true
 
@@ -149,7 +143,11 @@
     - stat: path=/home/xgds/.dockersetup
       register: docker_setup
       
+  roles:
+    - role: ansiblebit.oracle-java
+      oracle_java_set_as_default: yes
+      oracle_java_version: 8
+
   handlers:
     - include: handlers.yml
       become: true
-      
