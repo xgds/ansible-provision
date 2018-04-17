@@ -18,7 +18,7 @@
 
   - name: Download geoserver
     get_url:
-      url: {{geoserver_download_url}}
+      url: '{{geoserver_download_url}}'
       dest: '/tmp/geoserver-{{geoserver_version}}-bin.zip'
       mode: 0440
 
