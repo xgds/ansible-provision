@@ -16,15 +16,15 @@
 
   - include_vars: geoserver/geoserver-defaults.yml
 
-#  - name: Download geoserver
-#    get_url:
-#      url: {{geoserver_download_url}}
-#      dest: /tmp/geoserver-{{geoserver_version}}-bin.zip
-#      mode: 0440
+  - name: Download geoserver
+    get_url:
+      url: {{geoserver_download_url}}
+      dest: '/tmp/geoserver-{{geoserver_version}}-bin.zip'
+      mode: 0440
 
   - name: Extract geoserver into
     unarchive:
-      src: {{geoserver_download_url}}
+      src: '/tmp/geoserver-{{geoserver_version}}-bin.zip'
       dest: '{{geoserver_install_path}}-{{geoserver_version}}'
       remote-src: yes
 
