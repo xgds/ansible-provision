@@ -22,11 +22,11 @@
 
 sudo usermod -a -G staff $USER
 sudo apt-add-repository -y ppa:ansible/ansible
+sudo apt-add-repository -y ppa:webupd8team/java
 sudo apt-add-repository https://deb.nodesource.com/setup_8.x
 sudo apt-get -y update
 sudo apt-get -y upgrade
 sudo apt-get -y install ansible
-sudo ansible-galaxy install ansiblebit.launchpad-ppa-webupd8
-sudo ansible-galaxy install ansiblebit.oracle-java
+echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections
 
 echo "Please REBOOT now (sudo /sbin/reboot).  Then run provision-xgds.sh"
