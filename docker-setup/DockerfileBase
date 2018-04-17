@@ -54,11 +54,12 @@ RUN mkdir -p /home/xgds/.ssh
 
 # Install latest ansible in container for xGDS setup
 RUN apt-add-repository -y ppa:ansible/ansible
+RUN apt-add-repository -y ppa:webupd8team/java
 RUN apt-get -y update
 RUN apt-get -y install git
 RUN apt-get -y install sudo
 RUN apt-get -y install ansible
-
+RUN echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
 RUN touch /home/xgds/.dockersetup
 
 # Allow sudo w/o password so Ansible setup will work
