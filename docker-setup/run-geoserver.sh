@@ -16,6 +16,6 @@
 # specific language governing permissions and limitations under the License.
 #__END_LICENSE__
 
-su - xgds
-export GEOSERVER_HOME=/usr/local/geoserver/latest
-exec /usr/local/geoserver/latest/bin/startup.sh
+su - xgds -c "export GEOSERVER_HOME=/usr/local/geoserver/latest; exec /usr/local/geoserver/latest/bin/startup.sh"
+
+
