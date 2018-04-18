@@ -21,23 +21,29 @@
       url: '{{geoserver_download_url}}'
       dest: '/tmp/geoserver-{{geoserver_version}}-bin.zip'
 
+  - name: Creates geoserver install directory
+    file:
+      path: '{{geoserver_install_path}}'
+      state: directory
+      mode: 0755
+    become: true
+
   - name: Extract geoserver into
     unarchive:
       src: '/tmp/geoserver-{{geoserver_version}}-bin.zip'
-      dest: '{{geoserver_install_path}}-{{geoserver_version}}'
-      remote-src: yes
+      dest: '{{geoserver_install_path}}'
     become: true
 
   - name: Symlink Geoserver
     file:
-      src: '{{geoserver_install_path}}-{{geoserver_version}}'
-      dest: '{{geoserver_install_path}}'
+      src: '{{geoserver_install_path}}/geoserver-{{geoserver_version}}'
+      dest: '{{geoserver_install_path}}/geoserver'
       state: link
     become: true
 
   - name: Change Jetty port
     replace:
-      path: '{{geoserver_install_path}}/start.ini'
+      path: '{{geoserver_install_path}}/geoserver/start.ini'
       regexp: 'jetty.port=8080'
       replace: 'jetty.port={{geoserver_port}}'
     become: true
