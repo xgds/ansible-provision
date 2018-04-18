@@ -52,8 +52,8 @@
     - libgif-dev
     - build-essential
     - g++
-    # - oracle-java8-installer
-    # - oracle-java8-set-default
+    - oracle-java8-installer
+    - oracle-java8-set-default
     - nodejs
     - npm
     # Remove ruby 1.9.3 after bootstrap upgrade
