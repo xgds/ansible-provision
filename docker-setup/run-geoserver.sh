@@ -17,5 +17,5 @@
 #__END_LICENSE__
 
 su - xgds
-export GEOSERVER_HOME=/usr/local/geoserver/geoserver
-exec /usr/local/geoserver/geoserver/bin/startup.sh
+export GEOSERVER_HOME=/usr/local/geoserver/latest
+exec /usr/local/geoserver/latest/bin/startup.sh

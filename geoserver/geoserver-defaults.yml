@@ -17,6 +17,6 @@
     geoserver_version: 2.13.0
     geoserver_download_url: https://sourceforge.net/projects/geoserver/files/GeoServer/{{geoserver_version}}/geoserver-{{geoserver_version}}-bin.zip
 
-    # geoserver is installed to /usr/local/geoserver/geoserver-version and symlinked with /usr/local/geoserver/geoserver
+    # geoserver is installed to /usr/local/geoserver/geoserver-version and symlinked with /usr/local/geoserver/latest
     geoserver_install_path: /usr/local/geoserver # this is also used in run-geoserver.sh in docker-setup
     geoserver_port: 9090  # this is also used in nginx-defaults

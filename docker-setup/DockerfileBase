@@ -89,6 +89,9 @@ ADD run-memcached.sh /etc/service/memcached/run
 RUN mkdir /etc/service/nginx
 ADD run-nginx.sh /etc/service/nginx/run
 
+RUN mkdir /etc/service/geoserver
+ADD run-geoserver.sh /etc/service/geoserver/run
+
 ENV TERM xterm-color
 ENV LANG en_US.utf8
 USER xgds

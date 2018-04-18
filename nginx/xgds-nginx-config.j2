@@ -165,7 +165,7 @@ location / {
         proxy_set_header        X-Forwarded-Proto $scheme;
 
         # Fix the "It appears that your reverse proxy set up is broken" error.
-        proxy_pass          http://localhost:{{ nginx_geoserver_port }}/;
+        proxy_pass          http://localhost:{{ nginx_geoserver_port }};
         proxy_read_timeout  90;
 
         proxy_redirect      http://localhost:{{ nginx_geoserver_port }} http://localhost;
