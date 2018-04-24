@@ -79,3 +79,4 @@ pip_package_list:
   - markdown
   - djangorestframework
   - django-cors-headers
+  - PyYAML
