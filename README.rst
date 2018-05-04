@@ -34,17 +34,17 @@ You should be able to get xGDS running as follows:
 
 Building a docker image:
 
-- To build a new generic docker image:  tagname should be something like xgds-base:todaysdate ie xgds-base:20180329
+- **To build a new generic docker image**:  tagname should be something like xgds-base:todaysdate ie xgds-base:20180329
    - cd docker-setup
    - docker build --build-arg XGDS_SITENAME=yoursitename --build-arg XGDS_BING_MAP_KEY=yourbingmapskey -t tagname --squash --compress -f ./DockerfileBase .
 
-- To build a new specific docker image for a specific xgds, you must have that already created as a repository.  basetagname is the tagname from your generic docker image
+- **To build a new docker image for a specific xgds**, you must have that already created as a repository.  basetagname is the tagname from your generic docker image
 tagname is the name for your new complete image, ie xgds-yoursitename:todaysdate ie xgds-demo:20180329:
    - follow instructions to create a repository: https://github.com/xgds/xgds_baseline/blob/master/README.md
    - docker build --build-arg BASE_IMAGE_TAG=basetagname --build-arg XGDS_SITENAME=yoursitename --build-arg XGDS_BING_MAP_KEY=yourbingmapskey -t tagname --squash --compress -f ./DockerfileCheckoutPrep .
    - docker create -v /var -v /home/xgds -v /etc -v /usr/local --name yoursitename-data-store xgds-yoursitename:tagname /bin/true
 
-- To run the new complete container, tagname is the name for your new complete image. $1=path to codebase on your laptop.  $2=path to xgds_3dview code on your laptop if you have it do:
+- **To run the new complete container**, tagname is the name for your new complete image. $1=path to codebase on your laptop.  $2=path to xgds_3dview code on your laptop if you have it do:
    - docker run -t -d -v $1:/home/xgds/xgds_yoursitename -v $2:/home/xgds/xgds_3dview --volumes-from yoursitename-data-store --name yoursitename-container -p 80:80 -p 3306:3306 -p 7500:7500  -p 222:22 -p 443:443 -p 3001:3001 -p 5000:5000 -p 5984:5984 -p 8080:8080 -p 8181:8181 -p 9090:9090 -p 9191:9191 tagname
 
 - To get into the new container after it's running, do:
