@@ -27,7 +27,7 @@
 sudo usermod -a -G staff $USER
 sudo apt-add-repository -y ppa:ansible/ansible
 sudo apt-add-repository -y ppa:webupd8team/java
-sudo apt-add-repository https://deb.nodesource.com/setup_8.x
+sudo apt-add-repository https://deb.nodesource.com/node_8.x
 sudo apt-get -y update
 sudo apt-get -y upgrade
 sudo apt-get -y install ansible

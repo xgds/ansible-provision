@@ -55,7 +55,9 @@ RUN mkdir -p /home/xgds/.ssh
 # Install latest ansible in container for xGDS setup
 RUN apt-add-repository -y ppa:ansible/ansible
 RUN apt-add-repository -y ppa:webupd8team/java
+RUN apt-add-repository https://deb.nodesource.com/node_8.x
 RUN apt-get -y update
+RUN apt-get -y upgrade
 RUN apt-get -y install git
 RUN apt-get -y install sudo
 RUN apt-get -y install ansible
