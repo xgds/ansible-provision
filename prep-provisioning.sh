@@ -27,6 +27,7 @@
 sudo usermod -a -G staff $USER
 sudo apt-add-repository -y ppa:ansible/ansible
 sudo apt-add-repository -y ppa:webupd8team/java
+sudo curl -s https://deb.nodesource.com/gpgkey/nodesource.gpg.key | sudo apt-key add -
 sudo apt-add-repository https://deb.nodesource.com/node_8.x
 sudo apt-get -y update
 sudo apt-get -y upgrade
