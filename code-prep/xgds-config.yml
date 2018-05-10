@@ -18,6 +18,14 @@
       register: dev_db_settings
 
     - file:
+        path: "{{ source_root }}/xgds_{{xgds_sitename}}/data"
+        state: directory
+        owner: "{{ ansible_user_id }}"
+        group: www-data
+        mode: "u=rwX,g=rwX,o=rX"
+      become: yes
+
+    - file:
         path: "{{ source_root }}/xgds_{{xgds_sitename}}/data/relay"
         state: directory
         owner: "{{ ansible_user_id }}"
@@ -36,14 +44,6 @@
         
     - file:
         path: "{{ source_root }}/xgds_{{xgds_sitename}}/data/dem"
-        state: directory
-        owner: "{{ ansible_user_id }}"
-        group: www-data
-        mode: "u=rwX,g=rwX,o=rX"
-      become: yes
-        
-    - file:
-        path: "{{ source_root }}/xgds_{{xgds_sitename}}/data"
         state: directory
         owner: "{{ ansible_user_id }}"
         group: www-data
