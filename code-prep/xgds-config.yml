@@ -58,12 +58,6 @@
         command: "prepnpm"
         app_path: "{{ source_root }}/xgds_{{xgds_sitename}}"
 
-#    - django_manage:
-#        command: "prep"
-#        app_path: "{{ source_root }}/xgds_{{xgds_sitename}}"
-#      notify:
-#        - Restart apache2
-
     - django_manage:
         command: "prepmigrations"
         app_path: "{{ source_root }}/xgds_{{xgds_sitename}}"
@@ -91,6 +85,12 @@
     - name: Install timezone db into MySQL
       shell: mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql -u root --password={{ db_password }} mysql
 
+    - django_manage:
+      command: "prep"
+      app_path: "{{ source_root }}/xgds_{{xgds_sitename}}"
+      notify:
+        - Restart apache2
+
     - name: Enable pyraptor service.
       service:
         name: pyraptord
@@ -115,9 +115,9 @@
       notify:
         - Restart apache2
 
-#    - name: symlink static rest
-#      file:
-#        src: "{{ source_root }}/xgds_{{xgds_sitename}}/build/static"
-#        dest: "{{ source_root }}/xgds_{{xgds_sitename}}/build/static/rest"
-#        state: link
-#      become: true
+    - name: symlink static rest
+      file:
+        src: "{{ source_root }}/xgds_{{xgds_sitename}}/build/static"
+        dest: "{{ source_root }}/xgds_{{xgds_sitename}}/build/static/rest"
+        state: link
+      become: true
