@@ -21,6 +21,7 @@ pip_package_list:
   - pyScss
 #  - git+https://github.com/etianen/django-reversion.git@release-2.0.8#egg=reversion-2.0.8
   - django-sphinx
+  - coverage
   - httplib2
   - jinja2
   - pyproj
