@@ -50,6 +50,7 @@
     - libjpeg8-dev
     - libpango1.0-dev
     - libgif-dev
+    - imagemagick
     - build-essential
     - g++
     - oracle-java8-installer
