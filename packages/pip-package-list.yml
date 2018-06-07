@@ -61,7 +61,7 @@ pip_package_list:
   - pandas
   - SQLAlchemy
   - django-deepzoom
-  - django-datatables-view
+  - django-datatables-view==1.14.0
   - django-markwhat
   - django-autocomplete-light
   - couchdb
@@ -83,3 +83,4 @@ pip_package_list:
   - PyYAML
   - docutils
   - coverage
+  - django-jsonify
