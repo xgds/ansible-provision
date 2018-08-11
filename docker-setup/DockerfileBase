@@ -53,9 +53,12 @@ RUN mkdir -p /home/xgds/.ssh
 #RUN cat /tmp/your_key.pub >> /home/xgds/.ssh/authorized_keys && rm -f /tmp/your_key.pub
 
 # Install latest ansible in container for xGDS setup
+# also point at latest packages for couch and java and Vips
 RUN apt-add-repository -y ppa:ansible/ansible
 RUN apt-add-repository -y ppa:webupd8team/java
 RUN curl -s https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add -
+RUN wget https://raw.githubusercontent.com/jcupitt/libvips/8.4/python/packages/gi/overrides/Vips.py  -O /usr/lib/python2.7/dist-packages/gi/overrides/Vips.py
+RUN echo "deb https://apache.bintray.com/couchdb-deb xenial main" | tee -a /etc/apt/sources.list
 RUN apt-add-repository https://deb.nodesource.com/node_8.x
 RUN apt-get -y update
 RUN apt-get -y upgrade

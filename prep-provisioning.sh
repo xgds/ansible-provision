@@ -33,5 +33,7 @@ sudo apt-get -y update
 sudo apt-get -y upgrade
 sudo apt-get -y install ansible
 echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections
+sudo wget https://raw.githubusercontent.com/jcupitt/libvips/8.4/python/packages/gi/overrides/Vips.py  -O /usr/lib/python2.7/dist-packages/gi/overrides/Vips.py
+echo "deb https://apache.bintray.com/couchdb-deb xenial main" | sudo tee -a /etc/apt/sources.list
 
 echo "Please REBOOT now (sudo /sbin/reboot).  Then run provision-xgds.sh"

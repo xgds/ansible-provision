@@ -51,6 +51,9 @@
     - libpango1.0-dev
     - libgif-dev
     - imagemagick
+    - libvips-dev
+    - python-gi
+    - gir1.2-vips-8.0
     - build-essential
     - g++
     - oracle-java8-installer
