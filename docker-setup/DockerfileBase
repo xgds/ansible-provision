@@ -57,6 +57,7 @@ RUN mkdir -p /home/xgds/.ssh
 RUN apt-add-repository -y ppa:ansible/ansible
 RUN apt-add-repository -y ppa:webupd8team/java
 RUN curl -s https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add -
+RUN curl -L https://couchdb.apache.org/repo/bintray-pubkey.asc | apt-key add -
 RUN mkdir -p /usr/lib/python2.7/dist-packages/gi/overrides
 RUN curl -s https://raw.githubusercontent.com/jcupitt/libvips/8.4/python/packages/gi/overrides/Vips.py > /usr/lib/python2.7/dist-packages/gi/overrides/Vips.py
 RUN echo "deb https://apache.bintray.com/couchdb-deb xenial main" | tee -a /etc/apt/sources.list
