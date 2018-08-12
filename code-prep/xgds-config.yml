@@ -66,20 +66,20 @@
     #     command: "prepnpm"
     #     app_path: "{{ source_root }}/xgds_{{xgds_sitename}}"
 
-    - django_manage:
-        command: "prepmigrations"
-        app_path: "{{ source_root }}/xgds_{{xgds_sitename}}"
-      when: xgds_database.changed == True
+    # - django_manage:
+    #     command: "prepmigrations"
+    #     app_path: "{{ source_root }}/xgds_{{xgds_sitename}}"
+    #   when: xgds_database.changed == True
 
-    - django_manage:
-        command: "migrate"
-        app_path: "{{ source_root }}/xgds_{{xgds_sitename}}"
-      when: xgds_database.changed == True
+    # - django_manage:
+    #     command: "migrate"
+    #     app_path: "{{ source_root }}/xgds_{{xgds_sitename}}"
+    #   when: xgds_database.changed == True
 
-    - django_manage:
-        command: "prepfixtures"
-        app_path: "{{ source_root }}/xgds_{{xgds_sitename}}"
-      when: xgds_database.changed == True
+    # - django_manage:
+    #     command: "prepfixtures"
+    #     app_path: "{{ source_root }}/xgds_{{xgds_sitename}}"
+    #   when: xgds_database.changed == True
 
     - name: Import developer overrides to database
       mysql_db:
@@ -93,11 +93,11 @@
     - name: Install timezone db into MySQL
       shell: mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql -u root --password={{ db_password }} mysql
 
-    - django_manage:
-        command: "prep"
-        app_path: "{{ source_root }}/xgds_{{xgds_sitename}}"
-      notify:
-        - Restart apache2
+    # - django_manage:
+    #     command: "prep"
+    #     app_path: "{{ source_root }}/xgds_{{xgds_sitename}}"
+    #   notify:
+    #     - Restart apache2
 
     - name: Enable pyraptor service.
       service:
@@ -109,19 +109,19 @@
 
       # Note that the below environment should match the config in settings.py
       # If you need to change one, change the other to match.
-    - name: Install xgds superuser
-      shell: |
-        source sourceme.sh
-        python -c "import django; django.setup(); from django.contrib.auth.models import User; User.objects.create_superuser(username='{{django_superuser}}', password='{{django_superuser_password}}', email='')"
-      args:
-        chdir: "{{ source_root }}/xgds_{{xgds_sitename}}"
-      environment:
-        PYTHONPATH: "{{source_root}}:{{source_root}}/xgds_{{xgds_sitename}}/apps:$PYTHONPATH"
-        DJANGO_SETTINGS_MODULE: "xgds_{{xgds_sitename}}.settings"
-        DJANGO_SCRIPT_NAME: "/"
-      when: xgds_database.changed == True
-      notify:
-        - Restart apache2
+    # - name: Install xgds superuser
+    #   shell: |
+    #     source sourceme.sh
+    #     python -c "import django; django.setup(); from django.contrib.auth.models import User; User.objects.create_superuser(username='{{django_superuser}}', password='{{django_superuser_password}}', email='')"
+    #   args:
+    #     chdir: "{{ source_root }}/xgds_{{xgds_sitename}}"
+    #   environment:
+    #     PYTHONPATH: "{{source_root}}:{{source_root}}/xgds_{{xgds_sitename}}/apps:$PYTHONPATH"
+    #     DJANGO_SETTINGS_MODULE: "xgds_{{xgds_sitename}}.settings"
+    #     DJANGO_SCRIPT_NAME: "/"
+    #   when: xgds_database.changed == True
+    #   notify:
+    #     - Restart apache2
 
     - name: symlink static rest
       file:
