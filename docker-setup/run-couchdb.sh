@@ -16,4 +16,4 @@
 # specific language governing permissions and limitations under the License.
 #__END_LICENSE__
 
-exec /sbin/setuser couchdb /usr/bin/couchdb -o /var/log/couchdb/couchdb.log -e /var/log/couchdb/couchdb.log
+exec /sbin/setuser couchdb /opt/couchdb/bin/couchdb -o /var/log/couchdb/couchdb.log -e /var/log/couchdb/couchdb.log
