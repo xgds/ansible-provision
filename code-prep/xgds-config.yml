@@ -62,9 +62,9 @@
         command: "bootstrap --yes genSourceme genSettings"
         app_path: "{{ source_root }}/xgds_{{xgds_sitename}}"
 
-    - django_manage:
-        command: "prepnpm"
-        app_path: "{{ source_root }}/xgds_{{xgds_sitename}}"
+    # - django_manage:
+    #     command: "prepnpm"
+    #     app_path: "{{ source_root }}/xgds_{{xgds_sitename}}"
 
     - django_manage:
         command: "prepmigrations"
