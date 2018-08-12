@@ -51,7 +51,7 @@
       become: yes
 
     - file:
-        path: "{{ source_root }}/xgds_{{xgds_sitename}}/xgds_image/deepzoom_images"
+        path: "{{ source_root }}/xgds_{{xgds_sitename}}/data/xgds_image/deepzoom_images"
         state: directory
         owner: "{{ ansible_user_id }}"
         group: www-data
