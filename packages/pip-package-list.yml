@@ -86,3 +86,4 @@ pip_package_list:
   - colour
   - utm
   - openpyxl
+  - ffmpeg-python
