@@ -62,7 +62,7 @@ pip_package_list:
   - django-deepzoom
   - django-datatables-view==1.14.0
   - django-markwhat
-  - django-autocomplete-light==3.2.10
+  - django-autocomplete-light==3.2.4
   - couchdb
   - python-memcached
   - polycircles
