@@ -30,3 +30,7 @@
     - pkg-config
     - ack-grep
     - iputils-ping
+    - docker-ce
+    - docker-ce-cli
+    - containerd.io
+    

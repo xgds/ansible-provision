@@ -32,6 +32,14 @@ sudo apt-add-repository https://deb.nodesource.com/node_8.x
 sudo apt-get -y update
 sudo apt-get -y upgrade
 sudo apt-get -y install ansible
+
+# docker apt repo setup
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+
 echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections
 
 echo "Please REBOOT now (sudo /sbin/reboot).  Then run provision-xgds.sh"
