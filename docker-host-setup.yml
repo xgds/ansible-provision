@@ -35,11 +35,18 @@
 
     - include_vars: packages/docker-apt-package-list.yml
     - name: Install supporting OS packages
-      apt: pkg={{item}} state=installed
-      with_items:
-        - "{{   apt_package_list }}"
+      apt:
+        pkg: [{{apt_package_list}}]
+        state: present
       become: true
       
+    # Add current user to docker group so they can manage docker
+    - user:
+        name: "{{ ansible_user_id }}"
+        groups: docker
+        append: yes
+      become: true
+
     - name: Make sure pip is up-to-date
       pip: name=pip state=latest
       become: true
