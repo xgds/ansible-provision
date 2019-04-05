@@ -36,7 +36,7 @@
     - include_vars: packages/docker-apt-package-list.yml
     - name: Install supporting OS packages
       apt:
-        pkg: [{{apt_package_list}}]
+        pkg: "{{apt_package_list}}"
         state: present
       become: true
       
